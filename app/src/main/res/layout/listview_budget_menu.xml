@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icons_border_indigo_light"
+        android:layout_marginVertical="12dp"
+        android:layout_marginStart="24dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/selector" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/budget_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textColor="@color/action_bar_foreground"
+        android:text="budget_name" />
+</LinearLayout>

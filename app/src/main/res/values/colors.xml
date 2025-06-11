@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="semi_transparent">#D3515151</color>
+    <color name="semi_transparent_dark">#DA515050</color>
+    <color name="background">#C1C1C1</color>
+
+    <!-- Action bar -->
+    <color name="action_bar_background">#101B43</color>
+    <color name="action_bar_background_dark">#090F25</color>
+    <color name="action_bar_foreground">#DDDEDF</color>
+
+    <!-- Navigation bar -->
+    <color name="navigation_bar">#090F25</color>
+
+    <!-- Cards -->
+    <color name="cardview_container">#F3EDED</color>
+    <color name="cardview_background">#D3D0CC</color>
+    <color name="cardview_background_hidden">#B9B7B6</color>
+    <color name="cardview_foreground">#232222</color>
+    <color name="cardview_title_foreground">#FFFFFF</color>
+    <color name="cardview_title_background">#C66814</color>
+    <color name="editor_background">#99A3AC</color>
+
+    <!-- Calculator -->
+    <color name="calculator_button_border_normal">#5C5C5C</color>
+    <color name="calculator_button_solid_normal">#E4E4E4</color>
+    <color name="calculator_button_border_pressed">#7C7C7C</color>
+    <color name="calculator_button_solid_pressed">#888877</color>
+
+    <!-- Colores del fondo y texto de los ítems de Transaction List -->
+    <color name="income_background">#CAECC7</color>
+    <color name="income_text">#163A09</color>
+    <color name="income_description">#212221</color>
+    <color name="expense_background">#F1B3B3</color>
+    <color name="expense_text">#631515</color>
+    <color name="expense_description">#222121</color>
+    <color name="debt_background">#F1D8B3</color>
+    <color name="debt_text">#635B15</color>
+    <color name="debt_description">#222121</color>
+
+
+
+
+
+    <color name="fragment_add_background">#404547</color>
+    <color name="button_expense">#871919</color>
+    <color name="button_income">#1A650D</color>
+    <color name="button_debt">#9A6A18</color>
+
+    <color name="default_text">#D3D3D3</color>
+    <color name="default_text_dark">#787878</color>
+
+
+
+    <color name="snackbar_background">#1479C6</color>
+    <color name="snackbar_foreground">#DACF99</color>
+
+
+
+
+
+
+    <!-- Categories border colors -->
+    <color name="light_red">#D66565</color>
+    <color name="red">#AE3A3A</color>
+    <color name="dark_red">#7A2F2F</color>
+
+    <color name="light_pink">#D665A3</color>
+    <color name="pink">#AE3A6F</color>
+    <color name="dark_pink">#7A2F4A</color>
+
+    <color name="light_green">#65D665</color>
+    <color name="green">#3AAE3A</color>
+    <color name="dark_green">#2F7A2F</color>
+
+    <color name="light_blue">#65A3D6</color>
+    <color name="blue">#3A6FAE</color>
+    <color name="dark_blue">#2F4A7A</color>
+
+    <color name="indigo">#4B0082</color>
+    <color name="light_indigo">#6A0DAD</color>
+    <color name="dark_indigo">#310062</color>
+
+    <color name="light_yellow">#A8A81A</color>
+    <color name="yellow">#73770A</color>
+    <color name="dark_yellow">#4C4C05</color>
+
+    <color name="light_orange">#D69865</color>
+    <color name="orange">#AE6F3A</color>
+    <color name="dark_orange">#7A552F</color>
+
+    <color name="light_violet">#B465D6</color>
+    <color name="violet">#7A3AAE</color>
+    <color name="dark_violet">#552F7A</color>
+
+    <color name="light_lgray">#D3D3D3</color>
+    <color name="light_gray">#919191</color>
+    <color name="gray">#4E4E4E</color>
+    <color name="dark_gray">#2B2B2B</color>
+
+    <color name="light_brown">#B35928</color>
+    <color name="brown">#C66814</color>
+    <color name="dark_brown">#80430E</color>
+
+    <color name="pdf_green">#FDC4C4</color>
+    <color name="pdf_red">#CBFDCB</color>
+
+
+</resources>

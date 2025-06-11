@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="android:colorPrimary">@color/action_bar_background</item>
+        <item name="android:colorPrimaryDark">@color/action_bar_background_dark</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:colorForeground">#000</item>
+        <item name="cardViewStyle">@style/CustomCardView</item>>
+    </style>
+
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+</resources>

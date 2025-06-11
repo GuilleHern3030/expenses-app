@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/frame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="79dp"> <!-- Altura de cada item de la lista -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+
+        <FrameLayout
+                    android:id="@+id/category_image_container"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp">
+
+                    <ImageView
+                        android:id="@+id/category_image"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_gravity="center">
+
+                    </ImageView>
+                </FrameLayout>
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="16dp"
+            android:text="Category name"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

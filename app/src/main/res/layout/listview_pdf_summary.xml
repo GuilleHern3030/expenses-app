@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/frame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="79pt"> <!-- Altura de cada item de la lista -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingVertical="8pt"
+        android:paddingHorizontal="4pt">
+
+        <FrameLayout
+            android:layout_width="115pt"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/summary_transaction_category_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2pt"
+                android:gravity="end|bottom"
+                android:layout_gravity="center"
+                android:textColor="@color/dark_indigo"
+                android:text="Category name"
+                android:textSize="16pt" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0pt"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/summary_transaction_category_container"
+                    android:layout_width="32pt"
+                    android:layout_height="32pt"
+                    android:layout_marginStart="8pt">
+
+                    <ImageView
+                        android:id="@+id/summary_transaction_category_image"
+                        android:layout_width="20pt"
+                        android:layout_height="20pt"
+                        android:layout_gravity="center">
+
+                    </ImageView>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/bar_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="32pt">
+
+                    <FrameLayout
+                        android:id="@+id/bar"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="-6pt"
+                        android:layout_height="14pt"
+                        android:visibility="invisible">
+
+                    </FrameLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/percent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12pt"
+                android:layout_marginStart="32pt"
+                android:layout_gravity="bottom"
+                android:textColor="@color/dark_gray"
+                android:textSize="12pt"
+                android:text="%100"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="122pt"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/summary_transaction_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_gravity="center"
+                android:textColor="@color/indigo"
+                android:text="0.123.456.789,00"
+                android:textSize="15pt" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

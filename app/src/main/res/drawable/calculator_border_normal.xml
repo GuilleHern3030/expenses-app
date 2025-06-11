@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/calculator_button_solid_normal" /> <!-- Fondo del TextView -->
+    <stroke android:width="2dp" android:color="@color/calculator_button_border_normal" /> <!-- Cambia el color y el ancho según tus necesidades -->
+    <corners android:radius="8dp" /> <!-- Radio de las esquinas del TextView -->
+</shape>

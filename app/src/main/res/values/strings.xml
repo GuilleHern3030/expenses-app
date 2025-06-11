@@ -1,0 +1,288 @@
+<resources>
+    <string name="app_name">Expenses</string>
+
+    <string name="web_page_link" translatable="false">https://www.guillenh.com</string>
+    <string name="right" translatable="false"><![CDATA[>]]></string>
+    <string name="left" translatable="false"><![CDATA[<]]></string>
+    <string name="divide" translatable="false">/</string>
+
+    <string name="expenses">Expenses</string>
+    <string name="incomes">Incomes</string>
+    <string name="debts">Debts</string>
+
+    <string name="loading">Loading</string>
+    <string name="calculating">Calculating…</string>
+    <string name="commingson">Coming soon…</string>
+
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="summary">Summary</string>
+    <string name="shoppinglist">Shopping list</string>
+    <string name="budget">Budget</string>
+    <string name="action">Add</string>
+    <string name="delete">Delete</string>
+
+    <!-- First configuration -->
+    <string name="save">Save</string>
+
+    <!-- Transaction editor fragment -->
+    <string name="add_expense">Expense</string>
+    <string name="add_income">Income</string>
+    <string name="add_debt">Debt</string>
+    <string name="confirm">Confirm</string>
+    <string name="spinner_categories">Select your transaction`s category</string>
+    <string name="spinner_coins">Select your transaction`s coin</string>
+    <string name="input_description">Write your transaction`s description</string>
+    <string name="description">Description</string>
+    <string name="create_category">Create a new category</string>
+    <string name="error_invalid_amount">The number entered must be greater than zero</string>
+    <string name="want_delete_transaction">Do you want to delete this transaction?</string>
+    <string name="transactions_amount">Transactions amount</string>
+    <string name="transaction_amount">Transaction amount</string>
+    <string name="transaction_image">Image attached</string>
+    <string name="transaction_image_not_exists">The image has been removed</string>
+    <string name="transaction_created_success">Transaction created</string>
+    <string name="transaction_created_success_no_image">Transaction created without image</string>
+    <string name="transaction_created_failed">Transaction creation failed</string>
+    <string name="transaction_edited_success">Transaction edited</string>
+    <string name="transaction_edited_success_no_image">Transaction edited without image</string>
+    <string name="transaction_edited_failed">Transaction edition failed</string>
+    <string name="transaction_delete_success">Transaction deleted</string>
+    <string name="transaction_photo">Photo</string>
+    <string name="transaction_take_photo">Take photo</string>
+    <string name="transaction_select_photo">Select photo</string>
+    <string name="default_category">Others</string>
+
+    <!-- Home fragment -->
+    <string name="total_month">Total of month</string>
+    <string name="total_day">Total of day</string>
+    <string name="total">Total</string>
+    <string name="today">Today</string>
+    <string name="balance">Balance</string>
+    <string name="transactions">Transactions</string>
+    <string name="transactions_today">Today transactions</string>
+    <string name="transactions_empty">No transactions today</string>
+    <string name="debts_empty">No debts</string>
+    <string name="balance_empty">No balance available</string>
+    <string name="summary_empty">No transactions registered yet</string>
+
+    <!-- Date fragment -->
+    <string name="date_empty">No transactions registered in this day. You can add expenses or incomes by pressing the + button</string>
+
+    <!-- Summary fragment -->
+    <string name="summary_date_empty">No transactions registered yet. You can add expenses or incomes by pressing the + button</string>
+    <string name="transactions_summary_empty">No transactions registered yet.</string>
+    <string name="transactions_period">Details</string>
+    <string name="transactions_description_incomes">Total of incomes:</string>
+    <string name="transactions_description_expenses">Total of expenses:</string>
+    <string name="transactions_description_balance">Balance total:</string>
+    <string name="transactions_calendar_init">Initial day</string>
+    <string name="transactions_calendar_ends">Final day</string>
+    <string name="transactions_calendar_require_new_date">Please choose the closing date</string>
+
+    <!-- Configuration fragment -->
+    <string name="config">Configuration</string>
+    <string name="config_currency_title">Coin currency</string>
+    <string name="config_currency_configuration">Currency configuration</string>
+    <string name="config_currency_description">Select your coin currency</string>
+    <string name="config_currency_add">Add new coin</string>
+    <string name="config_decimal_title">Currency format</string>
+    <string name="config_decimal_description">Define your currency decimal format</string>
+    <string name="config_category_transactions_title">Transactions configuration</string>
+    <string name="config_categories">Categories</string>
+    <string name="config_category_incomes">Incomes categories</string>
+    <string name="config_category_incomes_description">Add or edit incomes categories</string>
+    <string name="config_category_expenses">Expenses categories</string>
+    <string name="config_category_expenses_description">Add or edit expenses categories</string>
+    <string name="config_security_title">Security</string>
+    <string name="config_security_password">Password</string>
+    <string name="config_security_password_description">Config or remove a password</string>
+    <string name="config_security_privacity">Privacity</string>
+    <string name="config_security_privacity_description">Read our privacity politics</string>
+    <string name="config_information_title">Information</string>
+    <string name="config_information_rate">Rate</string>
+    <string name="config_information_rate_description">Déjanos una linda reseña</string>
+    <string name="config_information_credits">Credits</string>
+    <string name="config_information_credits_description">Creator information</string>
+    <string name="config_information_donate">Donate</string>
+    <string name="config_information_donate_description">Help us with a donation</string>
+    <string name="config_delete_title">Restoration</string>
+    <string name="config_delete_restore">Remove all data</string>
+    <string name="config_delete_restore_description">Deletes all data and restart the application</string>
+    <string name="config_invoice_title">Invoice configuration</string>
+    <string name="config_invoice_logotype">Logotype</string>
+    <string name="config_invoice_logotype_description">Create your logotype</string>
+    <string name="config_invoice_details">Details</string>
+    <string name="config_invoice_details_description">Define invoice details</string>
+    <string name="config_invoice_signature">Signature</string>
+    <string name="config_invoice_signature_description">Define your signature</string>
+    <string name="config_invoice_taxes">Taxes</string>
+    <string name="config_invoice_taxes_description">Set up taxes</string>
+    <string name="config_invoice_payment">Payments</string>
+    <string name="config_invoice_payment_description">Payment methods</string>
+
+    <string name="principal_coin">Principal coin currency</string>
+    <string name="coin_name">Your coin name</string>
+    <string name="coin_symbol">Your coin symbol</string>
+    <string name="coin_amount">Your amount of coins</string>
+    <string name="more_coins">Habilitar más monedas</string>
+    <string name="decimal_format">Decimal format</string>
+    <string name="add_new_category">Add new category</string>
+    <string name="no_categories">No categories</string>
+    <string name="no_available_categories">No categories available</string>
+    <string name="invalid_name">That name contains invalid characters</string>
+
+    <string name="categories_editor_title">Category editor</string>
+    <string name="spinner_categories_icons">Select your category icon</string>
+    <string name="spinner_categories_colors">Select your category color</string>
+    <string name="spinner_categories_names">Write your category name</string>
+    <string name="category_no_name">Your category needs a name</string>
+    <string name="category_already_exists">That category already exists</string>
+    <string name="category_edition_success">Category edited successfully</string>
+    <string name="category_creatiom_success">Category created successfully</string>
+    <string name="category_operation_failed">Fails in category edition</string>
+    <string name="category_delete_success">Category deleted successfully</string>
+    <string name="want_delete_category">Do you want to delete this category?</string>
+
+
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="category_default_0">Salary</string>
+    <string name="category_default_1">Saves</string>
+    <string name="category_default_2">Deposit</string>
+    <string name="category_default_3">Buys</string>
+    <string name="category_default_4">Entertainment</string>
+    <string name="category_default_5">Transport</string>
+    <string name="category_default_6">Bills</string>
+    <string name="category_default_7">Home</string>
+    <string name="category_default_8">Rent</string>
+    <string name="category_default_9">Vehicle</string>
+    <string name="category_default_10">Gasoline</string>
+    <string name="category_default_11">Food</string>
+    <string name="category_default_12">Vacations</string>
+    <string name="category_default_13">General</string>
+    <string name="category_default_14">Clothes</string>
+    <string name="category_default_15">Health</string>
+
+    <!-- Password view -->
+    <string name="password">Password</string>
+    <string name="password_configuration_instruction">Write a new password</string>
+    <string name="password_configuration_want_disable">Do you want to disable your password?</string>
+    <string name="password_instruction">Please, write your password</string>
+    <string name="wrong_password">Invalid password</string>
+    <string name="password_created">Password created</string>
+    <string name="password_deleted">Password deleted</string>
+    <string name="password_created_failed">Invalid password</string>
+
+    <string name="want_delete_data">Are you sure you want to delete all data?</string>
+    <string name="privacy_politics_title">Privacity politics</string>
+
+    <!-- Shopping List -->
+    <string name="shopping_list_empty">No items yet. You can add items by pressing the + button.</string>
+    <string name="shopping_lists_empty">No lists yet. You can add a list by pressing the + button.</string>
+    <string name="shopping_list_write_description">Write a item of the list</string>
+    <string name="shopping_list_description_empty_error">The item description must not be empty</string>
+    <string name="shopping_list_input_name">List name</string>
+    <string name="shopping_list_input_title">List creator</string>
+    <string name="want_delete_shoppinglist">Do you want to delete this list?</string>
+    <string name="want_delete_shoppinglist_item">Do you want to delete this item?</string>
+    <string name="shoppinglist_intended">Write the item description</string>
+    <string name="shoppinglist_intended_hint">Item description</string>
+
+    <!-- Coin -->
+    <string name="coin_editor_title">Coin editor</string>
+    <string name="coin_input_name">Coin name</string>
+    <string name="coin_input_symbol">Coin symbol</string>
+    <string name="coin_no_name">Your coin needs a name and a symbol</string>
+    <string name="coin_already_exists">That coin already exists</string>
+    <string name="coin_edition_success">Coin edited successfully</string>
+    <string name="coin_creatiom_success">Coin created successfully</string>
+    <string name="coin_operation_failed">Fails in coin edition</string>
+    <string name="coin_delete_success">Coin deleted successfully</string>
+    <string name="want_delete_coin">Do you want to delete this coin?</string>
+    <string name="coin_saved">Coin saved</string>
+
+    <!-- Debts -->
+    <string name="debt_editor_title">Debt editor</string>
+    <string name="debt_lender_name">Lender name</string>
+    <string name="debt_requires">Lender name must not be empty</string>
+    <string name="debt_amount">Debt amount</string>
+    <string name="debt_delete_success">Debt deleted</string>
+    <string name="want_delete_debt">Do you want to delete this debt?</string>
+
+    <!-- Budgets -->
+    <string name="budgets_empty">No budget yet. You can add a budget by pressing the + button.</string>
+    <string name="budget_empty">No categories assigned yet. You can add a category by pressing the + button.</string>
+    <string name="budget_input_name">Budget list name</string>
+    <string name="budget_input_title">Budget creator</string>
+    <string name="create">Create</string>
+    <string name="spent">Spent:</string>
+    <string name="budgeted">Budgeted:</string>
+    <string name="want_delete_budget_category">Do you want to remove this category from the budget?</string>
+    <string name="want_delete_budget">Do you want to delete this budget list?</string>
+    <string name="budget_intended">Write the intended budget for this category</string>
+    <string name="budget_intended_total">Budget total</string>
+
+    <!-- Invoice -->
+    <string name="invoices_frame_title">Invoices</string>
+    <string name="invoices_empty">No invoices yet. You can add a invoice by pressing the + button.</string>
+
+
+    <!-- Month names -->
+    <string name="month_1">January</string>
+    <string name="month_2">February</string>
+    <string name="month_3">March</string>
+    <string name="month_4">April</string>
+    <string name="month_5">May</string>
+    <string name="month_6">June</string>
+    <string name="month_7">July</string>
+    <string name="month_8">August</string>
+    <string name="month_9">September</string>
+    <string name="month_10">October</string>
+    <string name="month_11">November</string>
+    <string name="month_12">December</string>
+
+    <string name="month_1_reduced">Jan</string>
+    <string name="month_2_reduced">Feb</string>
+    <string name="month_3_reduced">Mar</string>
+    <string name="month_4_reduced">Apr</string>
+    <string name="month_5_reduced">May</string>
+    <string name="month_6_reduced">Jun</string>
+    <string name="month_7_reduced">Jul</string>
+    <string name="month_8_reduced">Aug</string>
+    <string name="month_9_reduced">Sep</string>
+    <string name="month_10_reduced">Oct</string>
+    <string name="month_11_reduced">Nov</string>
+    <string name="month_12_reduced">Dec</string>
+
+    <string name="credits_content">This application was created by Guillermo Hernandez in July 2024 with the intention of providing a convenient way to manage expenses, as well as being able to view each money movement in a simplified way, without annoying ads in between.</string>
+    <string name="web_page">Web page</string>
+
+    <string name="privacity_politics_1_title">1. Introduction</string>
+    <string name="privacity_politics_1_content">This Privacy Policy describes how Expenses App ("we", "our", or "the App") collects, uses, and protects the information that users ("you", "your", or "user") provide when using our mobile application. We are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner.</string>
+    <string name="privacity_politics_2_title">2. Information Collection</string>
+    <string name="privacity_politics_2_subtitle">Our app collects and stores the following information:</string>
+    <string name="privacity_politics_2_content_1">Transactions: Data of incomes and expenses that you enter, including categories, amounts, and dates.</string>
+    <string name="privacity_politics_2_content_2">Budgets: Information about the monthly budgets you create.</string>
+    <string name="privacity_politics_2_content_3">Shopping Lists: Items and details of the shopping lists you prepare.</string>
+    <string name="privacity_politics_2_content_4">All the information collected by the App is stored locally on your device. We do not collect, store, or share your information with third parties over the internet.</string>
+    <string name="privacity_politics_3_title">3. Use of Information</string>
+    <string name="privacity_politics_3_subtitle">The information collected is used to:</string>
+    <string name="privacity_politics_3_content_1">Provide a summary of your transactions divided by categories.</string>
+    <string name="privacity_politics_3_content_2">Display a complete list of all your transactions sorted by date.</string>
+    <string name="privacity_politics_3_content_3">Allow the creation and tracking of monthly budgets.</string>
+    <string name="privacity_politics_3_content_4">Manage and maintain shopping lists.</string>
+    <string name="privacity_politics_4_title">4. Information Security</string>
+    <string name="privacity_politics_4_content">We take the security of your information very seriously. The app stores all data securely on your device. While we implement security measures to protect your information, it is also important that you protect your device from unauthorized access.</string>
+    <string name="privacity_politics_5_title">5. Your Rights</string>
+    <string name="privacity_politics_5_subtitle">You have the right to:</string>
+    <string name="privacity_politics_5_content_1">Access your data stored in the app.</string>
+    <string name="privacity_politics_5_content_2">Modify or delete any information entered in the app.</string>
+    <string name="privacity_politics_5_content_3">Uninstall the app, which will delete all data stored on your device.</string>
+    <string name="privacity_politics_6_title">6. Changes to the Privacy Policy</string>
+    <string name="privacity_politics_6_content_1">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. It is recommended that you review this Policy periodically to stay informed of any modifications.</string>
+    <string name="privacity_politics_6_content_2">Use of this application constitutes acceptance of our terms and privacy policies.</string>
+    <string name="privacity_politics_7_title">7. Contact</string>
+    <string name="privacity_politics_7_content">If you have any questions or concerns about this Privacy Policy, please contact us through our authorized means.</string>
+
+</resources>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_background_hidden"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".views.configuration.menu.Privacity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/action_bar_background"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/icons_border_green">
+
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/icon_ayuntamiento" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/app_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/config_security_privacity"
+                android:textColor="@color/action_bar_foreground" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/bBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="12dp"
+            android:foreground="@android:drawable/ic_menu_revert" />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:minHeight="32dp"
+            android:padding="3dp"
+            app:cardBackgroundColor="@color/cardview_container">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:minHeight="32dp"
+                android:padding="3dp"
+                app:cardBackgroundColor="@color/cardview_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/cardview_title_background"
+                        android:padding="4dp"
+                        android:text="@string/privacy_politics_title"
+                        android:textAlignment="center"
+                        android:textColor="@color/cardview_title_foreground"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_1_title"
+                        android:textAlignment="center"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_1_content"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_subtitle"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_content_1"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_content_2"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_content_3"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_2_content_4"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_subtitle"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_content_1"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_content_2"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_content_3"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_3_content_4"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_4_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_4_content"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_5_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_5_subtitle"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_5_content_1"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_5_content_2"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_5_content_3"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_6_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_6_content_1"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_6_content_2"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="6dp"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_7_title"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@string/privacity_politics_7_content"
+                        android:textColor="@color/cardview_foreground"
+                        android:textSize="13sp" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
+</LinearLayout>

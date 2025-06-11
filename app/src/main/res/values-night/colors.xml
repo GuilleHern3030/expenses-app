@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Colores del fondo y texto de los ítems de Transaction List -->
+    <color name="income_background">#9EC68F</color>
+    <color name="income_text">#163A09</color>
+    <color name="income_description">#212221</color>
+    <color name="expense_background">#EA8888</color>
+    <color name="expense_text">#631515</color>
+    <color name="expense_description">#222121</color>
+    <color name="editor_background">#111920</color>
+
+    <!-- Cards -->
+    <color name="cardview_container">#1D1E24</color>
+    <color name="cardview_background">#10101C</color>
+    <color name="cardview_background_hidden">#161620</color>
+    <color name="cardview_foreground">#D3D3D3</color>
+    <color name="cardview_title_foreground">#E4ECE9</color>
+    <color name="cardview_title_background">#C66814</color> <!-- Color del título de una CardView -->
+
+
+
+</resources>

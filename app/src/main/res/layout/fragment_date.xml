@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_background_hidden"
+    tools:context=".views.date.DateFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/navigation_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bYesterday"
+                android:layout_width="54dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="13dp"
+                app:cardBackgroundColor="@color/cardview_container"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bTomorrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/left"
+                    android:textSize="35sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/action_bar_foreground"
+                    android:textSize="15sp" />
+            </FrameLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bTomorrow"
+                android:layout_width="54dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginHorizontal="13dp"
+                app:cardBackgroundColor="@color/cardview_container"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bTomorrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/right"
+                    android:textSize="35sp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/cardview_container"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/action_bar">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:minHeight="32dp"
+                    android:padding="3dp"
+                    app:cardBackgroundColor="@color/cardview_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/cardview_title_background"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="@string/transactions"
+                            android:textColor="@color/cardview_title_foreground"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/date_list_empty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="32dp"
+                            android:text="@string/date_empty"
+                            android:textColor="@color/cardview_foreground" />
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:id="@+id/date_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:divider="@color/default_text_dark"
+                                android:dividerHeight="1dp"
+                                android:listSelector="@android:color/transparent"
+                                android:orientation="vertical" />
+                        </ScrollView>
+
+                        <FrameLayout
+                            android:id="@+id/transactions_day_balance_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:visibility="gone"
+                            android:background="@color/cardview_background_hidden">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/balance" />
+
+                            <TextView
+                                android:id="@+id/transactions_day_balance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:text="" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/navigation_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/navigation_view_home"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/navigation_view_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/home_white" />
+
+            <ImageView
+                android:id="@+id/navigation_view_summary"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/navigation_view_action"
+                app:layout_constraintStart_toEndOf="@+id/navigation_view_home"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/summary_white" />
+
+            <FrameLayout
+                android:id="@+id/navigation_view_action"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/navigation_view_budgets"
+                app:layout_constraintStart_toEndOf="@+id/navigation_view_summary"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/btn">
+
+                <ImageView
+                    android:id="@+id/navigation_view_action_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/plus"/>
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/navigation_view_budgets"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/navigation_view_shoppinglist"
+                app:layout_constraintStart_toEndOf="@+id/navigation_view_action"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/budget_white" />
+
+            <ImageView
+                android:id="@+id/navigation_view_shoppinglist"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/navigation_view_budgets"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/shoppinglist_white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_above"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"/>
+
+</FrameLayout>

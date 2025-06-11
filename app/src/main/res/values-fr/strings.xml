@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dépenses</string>
+    <string name="expenses">Dépenses</string>
+    <string name="incomes">Revenus</string>
+    <string name="debts">Dettes</string>
+
+    <string name="loading">Chargement</string>
+    <string name="calculating">Calcul…</string>
+    <string name="commingson">À venir…</string>
+
+    <!-- Navigation -->
+    <string name="home">Accueil</string>
+    <string name="summary">Résumé</string>
+    <string name="shoppinglist">Liste de courses</string>
+    <string name="budget">Budget</string>
+    <string name="action">Ajouter</string>
+    <string name="delete">Supprimer</string>
+
+    <!-- First configuration -->
+    <string name="save">Enregistrer</string>
+
+    <!-- Transaction editor fragment -->
+    <string name="add_expense">Dépense</string>
+    <string name="add_income">Revenu</string>
+    <string name="add_debt">Dette</string>
+    <string name="confirm">Accepter</string>
+    <string name="spinner_categories">Sélectionnez la catégorie de la transaction</string>
+    <string name="spinner_coins">Sélectionnez la monnaie de la transaction</string>
+    <string name="input_description">Écrivez la description de la transaction</string>
+
+    <string name="description">Description</string>
+    <string name="create_category">Créer une nouvelle catégorie</string>
+    <string name="error_invalid_amount">Le montant doit être supérieur à zéro</string>
+    <string name="want_delete_transaction">Voulez-vous supprimer cette transaction ?</string>
+    <string name="transactions_amount">Montant des transactions</string>
+    <string name="transaction_amount">Montant de la transaction</string>
+    <string name="transaction_image">Image jointe</string>
+    <string name="transaction_image_not_exists">L\'image a été supprimée</string>
+    <string name="transaction_created_success">Transaction créée</string>
+    <string name="transaction_created_success_no_image">Transaction créée sans image</string>
+    <string name="transaction_created_failed">Échec de la création de la transaction</string>
+    <string name="transaction_edited_success">Transaction modifiée</string>
+    <string name="transaction_edited_success_no_image">Transaction modifiée sans image</string>
+    <string name="transaction_edited_failed">Échec de la modification de la transaction</string>
+    <string name="transaction_delete_success">Transaction supprimée</string>
+    <string name="default_category">Autres</string>
+
+    <!-- Home fragment -->
+    <string name="total_month">Total du mois</string>
+    <string name="total_day">Total du jour</string>
+    <string name="total">Total</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="balance">Solde</string>
+    <string name="transactions">Transactions</string>
+    <string name="transactions_today">Transactions du jour</string>
+    <string name="transactions_empty">Pas de transactions aujourd\'hui</string>
+    <string name="debts_empty">Pas de dettes</string>
+    <string name="balance_empty">Pas de solde disponible</string>
+    <string name="summary_empty">Aucune transaction enregistrée pour le moment</string>
+
+    <!-- Date fragment -->
+    <string name="date_empty">Aucune transaction enregistrée ce jour-là. Vous pouvez ajouter des dépenses ou des revenus en appuyant sur le bouton +</string>
+
+    <!-- Summary fragment -->
+    <string name="summary_date_empty">Aucune transaction enregistrée pour le moment. Vous pouvez ajouter des dépenses ou des revenus en appuyant sur le bouton +</string>
+    <string name="transactions_summary_empty">Aucune transaction enregistrée pour le moment.</string>
+    <string name="transactions_period">Détails</string>
+    <string name="transactions_description_incomes">Total des revenus :</string>
+    <string name="transactions_description_expenses">Total des dépenses :</string>
+    <string name="transactions_description_balance">Solde total :</string>
+    <string name="transactions_calendar_init">Jour de début</string>
+    <string name="transactions_calendar_ends">Jour de fin</string>
+    <string name="transactions_calendar_require_new_date">Veuillez choisir la date de clôture</string>
+
+    <!-- Configuration fragment -->
+    <string name="config">Configuration</string>
+    <string name="config_currency_title">Monnaie</string>
+    <string name="config_currency_configuration">Configuration de la monnaie</string>
+    <string name="config_currency_description">Sélectionnez votre monnaie</string>
+    <string name="config_currency_add">Ajouter une nouvelle monnaie</string>
+    <string name="config_decimal_title">Format de la monnaie</string>
+    <string name="config_decimal_description">Définissez votre format décimal de la monnaie</string>
+    <string name="config_category_transactions_title">Configuration des transactions</string>
+    <string name="config_categories">Catégories</string>
+    <string name="config_category_incomes">Catégories de revenus</string>
+    <string name="config_category_incomes_description">Ajouter ou modifier des catégories de revenus</string>
+    <string name="config_category_expenses">Catégories de dépenses</string>
+    <string name="config_category_expenses_description">Ajouter ou modifier des catégories de dépenses</string>
+    <string name="config_security_title">Sécurité</string>
+    <string name="config_security_password">Mot de passe</string>
+    <string name="config_security_password_description">Configurer ou supprimer un mot de passe</string>
+    <string name="config_security_privacity">Confidentialité</string>
+    <string name="config_security_privacity_description">Lisez notre politique de confidentialité</string>
+    <string name="config_information_title">Information</string>
+    <string name="config_information_rate">Évaluer</string>
+    <string name="config_information_rate_description">Laissez-nous un avis</string>
+    <string name="config_information_credits">Crédits</string>
+    <string name="config_information_credits_description">Informations sur le créateur</string>
+    <string name="config_information_donate">Faire un don</string>
+    <string name="config_information_donate_description">Aidez-nous avec un don</string>
+    <string name="config_delete_title">Restauration</string>
+    <string name="config_delete_restore">Supprimer toutes les données</string>
+    <string name="config_delete_restore_description">Supprimez toutes les données et réinitialisez l\'application</string>
+    <string name="config_invoice_title">Configuration de la facture</string>
+    <string name="config_invoice_logotype">Logotype</string>
+    <string name="config_invoice_logotype_description">Créez votre logotype</string>
+    <string name="config_invoice_details">Détails</string>
+    <string name="config_invoice_details_description">Définissez les détails de la facture</string>
+    <string name="config_invoice_signature">Signature</string>
+    <string name="config_invoice_signature_description">Définissez votre signature</string>
+    <string name="config_invoice_taxes">Taxes</string>
+    <string name="config_invoice_taxes_description">Configurez les taxes</string>
+    <string name="config_invoice_payment">Paiements</string>
+    <string name="config_invoice_payment_description">Méthodes de paiement</string>
+
+    <string name="principal_coin">Monnaie principale</string>
+    <string name="coin_name">Nom de votre monnaie</string>
+    <string name="coin_symbol">Symbole de votre monnaie</string>
+    <string name="coin_amount">Quantité de monnaie</string>
+    <string name="more_coins">Activer plus de monnaies</string>
+    <string name="decimal_format">Format décimal</string>
+    <string name="add_new_category">Ajouter une nouvelle catégorie</string>
+    <string name="no_categories">Pas de catégories</string>
+    <string name="no_available_categories">Pas de catégories disponibles</string>
+    <string name="invalid_name">Ce nom contient des caractères invalides</string>
+
+    <string name="categories_editor_title">Éditeur de catégories</string>
+    <string name="spinner_categories_icons">Sélectionnez l\'icône de votre catégorie</string>
+    <string name="spinner_categories_colors">Sélectionnez la couleur de votre catégorie</string>
+    <string name="spinner_categories_names">Écrivez le nom de votre catégorie</string>
+    <string name="category_no_name">Votre catégorie a besoin d\'un nom</string>
+    <string name="category_already_exists">Cette catégorie existe déjà</string>
+    <string name="category_edition_success">Catégorie modifiée avec succès</string>
+    <string name="category_creatiom_success">Catégorie créée avec succès</string>
+    <string name="category_operation_failed">Échec de la modification de la catégorie</string>
+    <string name="category_delete_success">Catégorie supprimée avec succès</string>
+    <string name="want_delete_category">Voulez-vous supprimer cette catégorie ?</string>
+
+    <string name="category_default_0">Salaire</string>
+    <string name="category_default_1">Économies</string>
+    <string name="category_default_2">Dépôt</string>
+    <string name="category_default_3">Achats</string>
+    <string name="category_default_4">Divertissement</string>
+    <string name="category_default_5">Transport</string>
+    <string name="category_default_6">Factures</string>
+    <string name="category_default_7">Maison</string>
+    <string name="category_default_8">Loyer</string>
+    <string name="category_default_9">Véhicule</string>
+    <string name="category_default_10">Essence</string>
+    <string name="category_default_11">Nourriture</string>
+    <string name="category_default_12">Vacances</string>
+    <string name="category_default_13">Général</string>
+    <string name="category_default_14">Vêtements</string>
+    <string name="category_default_15">Santé</string>
+
+    <!-- Password view -->
+    <string name="password">Mot de passe</string>
+    <string name="password_configuration_instruction">Écrivez un nouveau mot de passe</string>
+    <string name="password_configuration_want_disable">Voulez-vous désactiver votre mot de passe?</string>
+    <string name="password_instruction">Veuillez écrire votre mot de passe</string>
+    <string name="wrong_password">Mot de passe invalide</string>
+    <string name="password_created">Mot de passe créé</string>
+    <string name="password_deleted">Mot de passe supprimé</string>
+    <string name="password_created_failed">Mot de passe invalide</string>
+
+    <string name="want_delete_data">Êtes-vous sûr de vouloir supprimer toutes les données?</string>
+    <string name="privacy_politics_title">Politique de confidentialité</string>
+
+    <!-- Shopping List -->
+    <string name="shopping_list_empty">Aucun article pour le moment. Vous pouvez ajouter des articles en appuyant sur le bouton +.</string>
+    <string name="shopping_lists_empty">Aucune liste pour le moment. Vous pouvez ajouter une liste en appuyant sur le bouton +.</string>
+    <string name="shopping_list_write_description">Écrivez un article de la liste</string>
+    <string name="shopping_list_description_empty_error">La description de l\'article ne doit pas être vide</string>
+    <string name="shopping_list_input_name">Nom de la liste</string>
+    <string name="shopping_list_input_title">Créateur de liste</string>
+    <string name="want_delete_shoppinglist">Voulez-vous supprimer cette liste?</string>
+    <string name="want_delete_shoppinglist_item">Voulez-vous supprimer cet élément?</string>
+    <string name="shoppinglist_intended">Écrivez la description de l\'article</string>
+    <string name="shoppinglist_intended_hint">Description de l\'article</string>
+
+    <!-- Coin -->
+    <string name="coin_editor_title">Éditeur de pièces</string>
+    <string name="coin_input_name">Nom de la pièce</string>
+    <string name="coin_input_symbol">Symbole de la pièce</string>
+    <string name="coin_no_name">Votre pièce a besoin d\'un nom et d\'un symbole</string>
+    <string name="coin_already_exists">Cette pièce existe déjà</string>
+    <string name="coin_edition_success">Pièce modifiée avec succès</string>
+    <string name="coin_creatiom_success">Pièce créée avec succès</string>
+    <string name="coin_operation_failed">Échec de la modification de la pièce</string>
+    <string name="coin_delete_success">Pièce supprimée avec succès</string>
+    <string name="want_delete_coin">Voulez-vous supprimer cette pièce?</string>
+    <string name="coin_saved">Pièce enregistrée</string>
+
+    <!-- Debts -->
+    <string name="debt_editor_title">Éditeur de dettes</string>
+    <string name="debt_lender_name">Nom du prêteur</string>
+    <string name="debt_requires">Le nom du prêteur ne doit pas être vide</string>
+    <string name="debt_amount">Montant de la dette</string>
+    <string name="debt_delete_success">Dette supprimée</string>
+    <string name="want_delete_debt">Voulez-vous supprimer cette dette?</string>
+
+    <!-- Budgets -->
+    <string name="budgets_empty">Aucun budget pour le moment. Vous pouvez ajouter un budget en appuyant sur le bouton +.</string>
+    <string name="budget_empty">Aucune catégorie attribuée pour le moment. Vous pouvez ajouter une catégorie en appuyant sur le bouton +.</string>
+    <string name="budget_input_name">Nom de la liste de budget</string>
+    <string name="budget_input_title">Créateur de budget</string>
+    <string name="create">Créer</string>
+    <string name="spent">Dépensé :</string>
+    <string name="budgeted">Budgétisé :</string>
+    <string name="want_delete_budget_category">Voulez-vous supprimer cette catégorie du budget?</string>
+    <string name="want_delete_budget">Voulez-vous supprimer cette liste de budget?</string>
+    <string name="budget_intended">Écrivez le budget prévu pour cette catégorie</string>
+    <string name="budget_intended_total">Budget total</string>
+
+    <!-- Invoice -->
+    <string name="invoices_frame_title">Factures</string>
+    <string name="invoices_empty">Aucune facture pour le moment. Vous pouvez ajouter une facture en appuyant sur le bouton +.</string>
+
+    <!-- Month names -->
+    <string name="month_1">Janvier</string>
+    <string name="month_2">Février</string>
+    <string name="month_3">Mars</string>
+    <string name="month_4">Avril</string>
+    <string name="month_5">Mai</string>
+    <string name="month_6">Juin</string>
+    <string name="month_7">Juillet</string>
+    <string name="month_8">Août</string>
+    <string name="month_9">Septembre</string>
+    <string name="month_10">Octobre</string>
+    <string name="month_11">Novembre</string>
+    <string name="month_12">Décembre</string>
+
+    <string name="month_1_reduced">Janv.</string>
+    <string name="month_2_reduced">Févr.</string>
+    <string name="month_3_reduced">Mars</string>
+    <string name="month_4_reduced">Avr.</string>
+    <string name="month_5_reduced">Mai</string>
+    <string name="month_6_reduced">Juin</string>
+    <string name="month_7_reduced">Juil.</string>
+    <string name="month_8_reduced">Août</string>
+    <string name="month_9_reduced">Sept.</string>
+    <string name="month_10_reduced">Oct.</string>
+    <string name="month_11_reduced">Nov.</string>
+    <string name="month_12_reduced">Déc.</string>
+
+    <string name="credits_content">Cette application a été créée par Guillermo Hernandez en juillet 2024 dans le but de fournir un moyen pratique de gérer les dépenses, ainsi que de pouvoir visualiser chaque mouvement d\'argent de manière simplifiée, sans publicités gênantes au milieu.</string>
+    <string name="web_page">Page Web</string>
+
+    <string name="privacity_politics_1_title">1. Introduction</string>
+    <string name="privacity_politics_1_content">Cette politique de confidentialité décrit comment l\'application "Dépenses" ("nous", "notre" ou "l'application") collecte, utilise et protège les informations que les utilisateurs ("vous", "votre" ou "utilisateur") fournissent en utilisant notre application mobile. Nous nous engageons à protéger votre vie privée et à garantir que vos informations personnelles soient traitées de manière sécurisée et responsable.</string>
+    <string name="privacity_politics_2_title">2. Collecte d\'informations</string>
+    <string name="privacity_politics_2_subtitle">Notre application collecte et stocke les informations suivantes:</string>
+    <string name="privacity_politics_2_content_1">Transactions: Données de revenus et de dépenses que vous saisissez, y compris les catégories, les montants et les dates.</string>
+    <string name="privacity_politics_2_content_2">Budgets: Informations sur les budgets mensuels que vous créez.</string>
+    <string name="privacity_politics_2_content_3">Listes de courses: Articles et détails des listes de courses que vous préparez.</string>
+    <string name="privacity_politics_2_content_4">Toutes les informations collectées par l\'application sont stockées localement sur votre appareil. Nous ne collectons, stockons ou partageons vos informations avec des tiers via Internet.</string>
+    <string name="privacity_politics_3_title">3. Utilisation des informations</string>
+    <string name="privacity_politics_3_subtitle">Les informations collectées sont utilisées pour:</string>
+    <string name="privacity_politics_3_content_1">Fournir un résumé de vos transactions divisées par catégories.</string>
+    <string name="privacity_politics_3_content_2">Afficher une liste complète de toutes vos transactions classées par date.</string>
+    <string name="privacity_politics_3_content_3">Permettre la création et le suivi des budgets mensuels.</string>
+    <string name="privacity_politics_3_content_4">Gérer et maintenir des listes de courses.</string>
+    <string name="privacity_politics_4_title">4. Sécurité de l\'information</string>
+    <string name="privacity_politics_4_content">Nous prenons la sécurité de vos informations très au sérieux. L\'application stocke toutes les données de manière sécurisée sur votre appareil. Bien que nous mettions en œuvre des mesures de sécurité pour protéger vos informations, il est également important que vous protégiez votre appareil contre les accès non autorisés.</string>
+    <string name="privacity_politics_5_title">5. Vos droits</string>
+    <string name="privacity_politics_5_subtitle">Vous avez le droit de:</string>
+    <string name="privacity_politics_5_content_1">Accéder à vos données stockées dans l\'application.</string>
+    <string name="privacity_politics_5_content_2">Modifier ou supprimer toute information saisie dans l\'application.</string>
+    <string name="privacity_politics_5_content_3">Désinstaller l\'application, ce qui supprimera toutes les données stockées sur votre appareil.</string>
+    <string name="privacity_politics_6_title">6. Modifications de la politique de confidentialité</string>
+    <string name="privacity_politics_6_content_1">Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle politique de confidentialité sur cette page. Il est recommandé de consulter périodiquement cette politique pour rester informé de toute modification.</string>
+    <string name="privacity_politics_6_content_2">L\'utilisation de cette application constitue une acceptation de nos termes et politiques de confidentialité.</string>
+    <string name="privacity_politics_7_title">7. Contact</string>
+    <string name="privacity_politics_7_content">Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité, veuillez nous contacter par nos moyens autorisés.</string>
+    <string name="transaction_take_photo">Prendre une photo</string>
+    <string name="transaction_select_photo">Sélectionnez une photo</string>
+    <string name="transaction_photo">Photo</string>
+
+</resources>
