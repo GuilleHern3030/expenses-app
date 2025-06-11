@@ -319,10 +319,21 @@ public class TransactionFragment extends Fragment {
 
     private void editTransaction(final View view) {
         Transaction newTransaction = transaction();
-        boolean success = Controller.transactions(requireActivity()).edit(this.id, newTransaction);
-        if (success) {
+        try {
+            if (!oldTransaction.getDate().isSameMonth(newTransaction.getDate())) {
+                final int newId = Controller.transactions(requireActivity()).move(newTransaction, oldTransaction.getDate(), newTransaction.getDate());
+                if (newId >= 0) newTransaction = transaction(newId); else throw new IndexOutOfBoundsException();
+            }
+            final boolean success = Controller.transactions(requireActivity()).edit(newTransaction);
+            if (!success) throw new IllegalArgumentException();
             listener.onTransactionEdited(oldTransaction, newTransaction);
-        } else SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_edited_failed));
+        } catch (IndexOutOfBoundsException ignored) {
+            SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_edited_failed));
+            SnackBar.show(requireActivity(), view, "Index out of bounds exception");
+        } catch (IllegalArgumentException ignored) {
+            SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_edited_failed));
+            SnackBar.show(requireActivity(), view, "Illegal argument exception");
+        }
     }
 
     private void showTransactionDeleteDialog() {
@@ -330,7 +341,7 @@ public class TransactionFragment extends Fragment {
         fragment.setOnDeleteListener(new DeleteLayout.OnDeleteListener() {
             @Override
             public void onSuccessDelete() {
-                listener.onTransactionDelete(transaction());
+                listener.onTransactionDelete(oldTransaction);
             }
 
             @Override
@@ -363,6 +374,10 @@ public class TransactionFragment extends Fragment {
 
     private Transaction transaction() {
         final int id = this.id != -1 ? this.id : Controller.transactions(requireActivity()).get(this.date).getUnusedId();
+        return new Transaction(id, category, date, money, description, isAnIncome, photoUri);
+    }
+
+    private Transaction transaction(final int id) {
         return new Transaction(id, category, date, money, description, isAnIncome, photoUri);
     }
 

@@ -1,6 +1,7 @@
 package enel.dev.budgets.data.sql;
 
 import static enel.dev.budgets.data.sql.Controller.DATA_BASE;
+import static enel.dev.budgets.data.sql.Controller.transactions;
 
 import android.content.Context;
 import android.util.Log;
@@ -150,14 +151,20 @@ public class TransactionsSQL {
         return newRow >= 0;
     }
 
-    public boolean edit(final int id, final Transaction transaction) {
+    /**
+     * Edita la información de una transacción sin modificar el mes de la transacción
+     * @param transaction Transacción con la nueva información
+     * @return devuelve TRUE si la edición fue exitosa
+     */
+    public boolean edit(final Transaction transaction) {
         if (transaction == null) return false;
+        boolean success = false;
         final BasicSQL sql = new BasicSQL(context, DATA_BASE);
         final String tableName = transactionsTableName(transaction.getDate().getYear(), transaction.getDate().getMonth());
         if (sql.tablaExiste(tableName)) {
-            final int row = sql.tablaBuscarFila(tableName, "id", String.valueOf(id), true);
-            if (row >= 0) {
-                return sql.tablaEditarFila(tableName, row, new String[]{
+            final int row = sql.tablaBuscarFila(tableName, "id", String.valueOf(transaction.id()), true);
+            if (row >= 0)
+                success = sql.tablaEditarFila(tableName, row, new String[]{
                         String.valueOf(transaction.id()), // ID
                         transaction.getMoney().name(), // coin name
                         transaction.getMoney().getCoin().getSymbol(), // coin symbol
@@ -168,10 +175,51 @@ public class TransactionsSQL {
                         transaction.getDescription(), // description
                         transaction.getPhotoUri()
                 });
-            }
         }
         sql.cerrar();
-        return false;
+        return success;
+    }
+
+    /**
+     * Mueve una transacción a una nueva fecha, lo cual provocará un cambio en el ID de la transacción
+     * @param transaction Transacción que se quiere mover (no se modificará ninguno de sus datos)
+     * @param oldDate Fecha donde se encuentra la transacción actualmente
+     * @param newDate Fecha a donde se moverá la transacción sin modificar sus datos internos
+     * @return nuevo ID de la transacción
+     */
+    public int move(final Transaction transaction, final Date oldDate, final Date newDate) {
+        final int unusedId = getUnusedId(newDate);
+        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
+        try {
+            final String oldTableName = transactionsTableName(oldDate.getYear(), oldDate.getMonth());
+            final String newTableName = transactionsTableName(transaction.getDate().getYear(), transaction.getDate().getMonth());
+            if (sql.tablaExiste(oldTableName)) {
+                final int oldRow = sql.tablaBuscarFila(oldTableName, "id", String.valueOf(transaction.id()), true);
+                if (oldRow >= 0) sql.tablaEliminarFila(oldTableName, oldRow, true);
+                else throw new Exception();
+            }
+            if (!sql.tablaExiste(newTableName))
+                createTransactionsTable(sql, transaction.getDate());
+            sql.tablaIngresarFila(newTableName, new String[]{
+                    String.valueOf(unusedId), // ID
+                    transaction.getMoney().name(), // coin name
+                    transaction.getMoney().getCoin().getSymbol(), // coin symbol
+                    String.valueOf(transaction.getMoney().getAmount()), // amount
+                    transaction.getDate().toString(), // date encoded
+                    transaction.getCategory().getName(), // category name
+                    transaction.isAnIncome() ? "1" : "0", // isAnIncome
+                    transaction.getDescription(), // description
+                    transaction.getPhotoUri()
+            });
+            return unusedId;
+        } catch(Exception ignored) { }
+        sql.cerrar();
+        return -1;
+    }
+
+    private int getUnusedId(final Date date) {
+        Transactions transactions = get(date);
+        return transactions.getUnusedId();
     }
 
     public boolean delete(final int id, final String dateEncoded) {

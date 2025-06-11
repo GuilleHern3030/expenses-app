@@ -439,8 +439,13 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     @Override
     public void onTransactionEdited(final Transaction oldTransaction, final Transaction newTransaction) {
         hideFragmentAbove();
-        balanceLoaded.edit(oldTransaction, newTransaction);
-        transactionsLoaded.set(oldTransaction, newTransaction);
+        if (oldTransaction.getDate().isSameMonth(newTransaction.getDate())) {
+            balanceLoaded.edit(oldTransaction, newTransaction);
+            transactionsLoaded.set(oldTransaction, newTransaction);
+        } else {
+            balanceLoaded.remove(oldTransaction);
+            transactionsLoaded.remove(oldTransaction);
+        }
         actualizeViews(transactionsLoaded);
         actualizeBalanceList(balanceLoaded, transactionsLoaded);
     }

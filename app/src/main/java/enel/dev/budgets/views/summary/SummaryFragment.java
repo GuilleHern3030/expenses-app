@@ -398,7 +398,9 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
     public void onTransactionEdited(final Transaction oldTransaction, final Transaction newTransaction) {
         hideFragmentAbove();
         try {
-            transactionsList.edit(oldTransaction, newTransaction);
+            if (oldTransaction.getDate().isSameMonth(newTransaction.getDate()))
+                transactionsList.edit(oldTransaction, newTransaction);
+            else transactionsList.remove(oldTransaction);
             actualizeSummaryList(oldTransaction.isAnIncome());
             actualizeTransactionsList();
         } catch(Exception ignored) {
