@@ -97,6 +97,8 @@
     <string name="config_information_rate_description">Déjanos una reseña</string>
     <string name="config_information_credits">Créditos</string>
     <string name="config_information_credits_description">Información del creador</string>
+    <string name="config_information_widemode">Modo ancho</string>
+    <string name="config_information_widemode_description">Si sus botones están tapados, actíveme</string>
     <string name="config_information_donate">Donar</string>
     <string name="config_information_donate_description">Ayúdanos con una donación</string>
     <string name="config_delete_title">Restauración</string>

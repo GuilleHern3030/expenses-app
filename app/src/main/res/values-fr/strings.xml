@@ -97,6 +97,8 @@
     <string name="config_information_rate_description">Laissez-nous un avis</string>
     <string name="config_information_credits">Crédits</string>
     <string name="config_information_credits_description">Informations sur le créateur</string>
+    <string name="config_information_widemode">Mode large</string>
+    <string name="config_information_widemode_description">Si certains boutons sont couverts, activez-moi</string>
     <string name="config_information_donate">Faire un don</string>
     <string name="config_information_donate_description">Aidez-nous avec un don</string>
     <string name="config_delete_title">Restauration</string>

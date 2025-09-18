@@ -18,6 +18,7 @@ public class Preferences {
     private static final String DEFAULT_DECIMAL_FORMAT_KEY = "decimalformat";
     private static final String PASSWORD_KEY = "accesspass";
     private static final String MORE_COINS_ACTIVED = "morecoins";
+    private static final String WIDE_MODE = "wide";
 
     public static final int DEFAULT_DECIMALS_AMOUNT = 2;
 
@@ -46,6 +47,11 @@ public class Preferences {
     public static String password(final Activity activity) {
         SharedPreferences sp = activity.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
         return sp.getString(PASSWORD_KEY, "");
+    }
+
+    public static boolean wideMode(final Activity activity) {
+        SharedPreferences sp = activity.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sp.getBoolean(WIDE_MODE, false);
     }
 
     public static void setDefaultCoin(final Activity activity, final Coin coin) {
@@ -87,6 +93,13 @@ public class Preferences {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PASSWORD_KEY, password);
+        editor.apply();
+    }
+
+    public static void setWideMode(final Activity activity, final boolean bool) {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(WIDE_MODE, bool);
         editor.apply();
     }
 

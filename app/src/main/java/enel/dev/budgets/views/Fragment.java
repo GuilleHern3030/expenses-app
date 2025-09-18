@@ -143,4 +143,10 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     public abstract void onActionPressed();
 
     public abstract void onBackPressed();
+
+    protected int dpToPx(int dp){
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
 }

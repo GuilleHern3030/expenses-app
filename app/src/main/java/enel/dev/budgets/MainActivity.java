@@ -1,8 +1,13 @@
 package enel.dev.budgets;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import enel.dev.budgets.data.preferences.Preferences;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
         setContentView(R.layout.activity_main);
         loadDefaultData();
 
+        setWideMode(Preferences.wideMode(this));
 
         // Initial fragment
         final String password = Preferences.password(this);
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
             else
                 showFragment(HomeFragment.newInstance());
         }
+
     }
 
     /*@Override
@@ -64,8 +71,10 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
         this.fragment = fragment;
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_activity, fragment)
+                .replace(R.id.fragment, fragment)
                 .commit();
+
+        //fixNavButtonsEx(findViewById(R.id.main_activity));
     }
 
     private void loadDefaultData() {
@@ -76,5 +85,52 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
     @Override
     public void onChangeFragment(Fragment newFragment) {
         showFragment(newFragment);
+    }
+
+    public void setWideMode(final boolean wideMode) {
+        Log.d("NAVBAR", "Barra fix");
+
+        View rootView = findViewById(R.id.main_activity);
+
+        // Listener moderno con WindowInsetsCompat
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+            Log.d("NAVBAR", "Barra fix 1");
+
+            // Altura de la barra de navegación inferior
+            int navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+
+            // Ajuste superior (status bar)
+            int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+            rootView.setPadding(
+                    rootView.getPaddingLeft(),
+                    wideMode ? statusBarHeight + dpToPx(16) : statusBarHeight, // separacion extra
+                    rootView.getPaddingRight(),
+                    rootView.getPaddingBottom()
+            );
+
+            // Ajustamos padding inferior de los botones
+            rootView.setPadding(
+                    rootView.getPaddingLeft(),
+                    rootView.getPaddingTop(),
+                    rootView.getPaddingRight(),
+                    wideMode ? navBarHeight + dpToPx(48) : navBarHeight // 16dp extra de margen
+            );
+
+            if(navBarHeight > 0){
+                Log.d("NAVBAR", "Barra de navegación detectada. Altura: " + navBarHeight);
+            } else {
+                Log.d("NAVBAR", "Sin barra de navegación (gestos o botones físicos)");
+            }
+
+            // Retornamos el insets original para que otros views también lo reciban
+            return insets;
+        });
+
+        rootView.post(() -> ViewCompat.requestApplyInsets(rootView));
+    }
+
+    private int dpToPx(int dp){
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 }

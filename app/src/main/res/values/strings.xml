@@ -104,6 +104,8 @@
     <string name="config_information_rate_description">Déjanos una linda reseña</string>
     <string name="config_information_credits">Credits</string>
     <string name="config_information_credits_description">Creator information</string>
+    <string name="config_information_widemode">Wide mode</string>
+    <string name="config_information_widemode_description">If some buttons are covered, activate me</string>
     <string name="config_information_donate">Donate</string>
     <string name="config_information_donate_description">Help us with a donation</string>
     <string name="config_delete_title">Restoration</string>
@@ -125,7 +127,7 @@
     <string name="coin_name">Your coin name</string>
     <string name="coin_symbol">Your coin symbol</string>
     <string name="coin_amount">Your amount of coins</string>
-    <string name="more_coins">Habilitar más monedas</string>
+    <string name="more_coins">Enable more currencies</string>
     <string name="decimal_format">Decimal format</string>
     <string name="add_new_category">Add new category</string>
     <string name="no_categories">No categories</string>

@@ -25,6 +25,7 @@ import enel.dev.budgets.views.configuration.menu.DecimalConfiguration;
 import enel.dev.budgets.views.configuration.menu.PasswordConfiguration;
 import enel.dev.budgets.views.configuration.menu.Privacity;
 import enel.dev.budgets.views.configuration.menu.RemoveConfiguration;
+import enel.dev.budgets.views.configuration.menu.WideConfiguration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,6 +87,9 @@ public class ConfigurationFragment extends Fragment {
 
         LinearLayout configCredits = view.findViewById(R.id.bConfigCredits);
         configCredits.setOnClickListener(v -> showFragmentAbove(new Credits()));
+
+        LinearLayout configWide = view.findViewById(R.id.bConfigWide);
+        configWide.setOnClickListener(v -> showFragmentAbove(new WideConfiguration()));
 
         LinearLayout configDelete = view.findViewById(R.id.bConfigDelete);
         configDelete.setOnClickListener(v -> showFragmentAbove(new RemoveConfiguration()));
