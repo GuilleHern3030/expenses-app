@@ -1,5 +1,7 @@
 package enel.dev.budgets.views.configuration;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import enel.dev.budgets.views.Fragment;
@@ -7,15 +9,18 @@ import enel.dev.budgets.views.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.views.configuration.menu.CategoriesConfiguration;
@@ -104,7 +109,26 @@ public class ConfigurationFragment extends Fragment {
 
     @Override
     public void onActionPressed() {
+        ReviewManager manager = ReviewManagerFactory.create(requireContext());
+        Task<ReviewInfo> request = manager.requestReviewFlow();
 
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ReviewInfo reviewInfo = task.getResult();
+                Task<Void> flow = manager.launchReviewFlow(requireActivity(), reviewInfo);
+                flow.addOnCompleteListener(task2 -> {
+                    // El flujo de reseña terminó (no sabés si el usuario realmente calificó)
+                });
+            } else try {
+                // Abre la app de Play Store
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + requireContext().getPackageName())));
+            } catch (android.content.ActivityNotFoundException e) {
+                // Si no tiene Play Store, abre en el navegador
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" + requireContext().getPackageName())));
+            }
+        });
     }
 
     @Override

@@ -6,22 +6,15 @@ import static android.view.View.VISIBLE;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.objects.debt.Debt;
 import enel.dev.budgets.objects.NumberFormat;
 import enel.dev.budgets.objects.debt.Debts;
-import enel.dev.budgets.objects.money.Money;
-import enel.dev.budgets.objects.transaction.Transaction;
 
 /*
     Listado de deudas declaradas por el usuario

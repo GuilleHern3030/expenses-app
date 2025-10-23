@@ -28,6 +28,10 @@ public class Category {
         this(name, imageId, colorId, false);
     }
 
+    public Category() {
+        this("?");
+    }
+
     public String getName() { return this.name; }
     public int getImage() { return Icon.icon(imageId); }
     public int getImageId() { return this.imageId; }
@@ -45,6 +49,7 @@ public class Category {
         return this.name;
     }
 
+    @NonNull
     public Category clone() {
         return new Category(this.name, this.imageId, this.colorId, this.isAnIncome);
     }

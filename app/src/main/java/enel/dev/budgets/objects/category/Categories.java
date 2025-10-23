@@ -17,7 +17,7 @@ public class Categories extends ArrayList<Category> {
                     return this.get(i);
             } catch(Exception ignored) { }
         }
-        return null;
+        return new Category();
     }
 
     public Categories incomes() {

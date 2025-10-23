@@ -3,6 +3,7 @@ package enel.dev.budgets.objects.transaction;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+@SuppressWarnings("unused")
 public class TransactionsArray extends ArrayList<Transactions> {
 
     public TransactionsArray(final Transactions transactions) {

@@ -27,6 +27,7 @@ import enel.dev.budgets.objects.category.Category;
 public class BudgetRemover extends BudgetContext {
 
     private String budgetName;
+    private String categoryName;
     private Category category;
     public BudgetRemover() {
         // Required empty public constructor
@@ -37,6 +38,8 @@ public class BudgetRemover extends BudgetContext {
         Bundle args = new Bundle();
         args.putString("name", budgetName);
         args.putString("categoryname", category.getName());
+        args.putInt("categorycolorid", category.getColorId());
+        args.putInt("categoryimageid", category.getImageId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,8 +50,14 @@ public class BudgetRemover extends BudgetContext {
         Categories categories = Controller.categories(requireActivity()).get();
         if (getArguments() != null) try {
             this.budgetName = getArguments().getString("name");
-            this.category = categories.getCategory(getArguments().getString("categoryname", ""));
-        } catch(Exception ignored) { }
+            this.categoryName = getArguments().getString("categoryname");
+            try { this.category = categories.getCategory(this.categoryName); }
+            catch(Exception ignored) {
+                this.category = new Category(getArguments().getString("categoryname"), getArguments().getInt("categoryimageid"), getArguments().getInt("categorycolorid"));
+            }
+        } catch(Exception ignored) {
+            this.category = new Category();
+        }
     }
 
     @Override
@@ -83,7 +92,7 @@ public class BudgetRemover extends BudgetContext {
     }
 
     private void removeBudget(final Category category, final String budgetName) {
-        boolean success = BudgetController.remove(requireActivity(), budgetName, category.getName());
+        boolean success = BudgetController.remove(requireActivity(), budgetName, this.categoryName);
         removeBudget(new Budget(category));
     }
 }

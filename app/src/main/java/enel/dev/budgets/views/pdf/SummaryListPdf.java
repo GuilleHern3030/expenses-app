@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.objects.NumberFormat;
-import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.objects.transaction.Transaction;
 import enel.dev.budgets.objects.transaction.Transactions;
 
@@ -65,8 +64,6 @@ public class SummaryListPdf {
             tvCategoryName.setText(transaction.getCategory().getName());
             tvAmount.setText(transaction.getMoney().toString(this.decimalFormat));
             tvPercent.setText(String.format("%.1f", percent) + " %");
-
-            LinearLayout frame = view.findViewById(R.id.frame);
 
             createBar(view.findViewById(R.id.bar_container), bar, (int) percent, (int) maxPercent);
 

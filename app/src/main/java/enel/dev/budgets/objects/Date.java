@@ -1,18 +1,18 @@
 package enel.dev.budgets.objects;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
 
 import java.util.Calendar;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.preferences.Preferences;
 
 /**
  *  Objeto que representa una fecha en un formato más amigable para poder guardarlo en una base de datos
  *  El formato en que se guardará será YYYYMMDDHH
  */
+@SuppressWarnings("unused")
 public class Date {
 
     private final int day;
@@ -165,7 +165,7 @@ public class Date {
 
     /**
      * Obtener la fecha del día de mañana
-     * @return
+     * @return Devuelve un nuevo objeto Date con el día de mañana
      */
     public Date tomorrow() {
         try {
@@ -179,7 +179,7 @@ public class Date {
 
     /**
      * Obtener la fecha del día de ayer
-     * @return
+     * @return Devuelve un nuevo objeto Date con el día de ayer
      */
     public Date yesterday() {
         try {
@@ -193,7 +193,7 @@ public class Date {
 
     /**
      * Obtener la fecha del mes siguiente
-     * @return
+     * @return Devuelve un nuevo objeto Date con el mes siguiente
      */
     public Date nextMonth() {
         try {
@@ -207,7 +207,7 @@ public class Date {
 
     /**
      * Obtener la fecha del mes anterior
-     * @return
+     * @return Devuelve un nuevo objeto Date con el mes anterior
      */
     public Date lastMonth() {
         try {
@@ -270,10 +270,11 @@ public class Date {
 
     private static int maxDay(final int month, final int year) {
         switch (month) {
-            case 11: return 30;
-            case 4: return 30;
-            case 6: return 30;
-            case 9: return 30;
+            case 11:
+            case 9:
+            case 6:
+            case 4:
+                return 30;
             case 2: return (year % 4 == 0) ? 29 : 28; // February
             default: return 31;
         }
@@ -282,19 +283,9 @@ public class Date {
     private static boolean isValidDay(final int day, final int month, final int year) {
         if (day < 1 || month < 1 || month > 12) return false;
         return day <= maxDay(month, year);
-        /*switch (month) {
-            case 11: return day < 31; // Noviembre
-            case 4: return day < 31; // Abril
-            case 6: return day < 31; // Junio
-            case 9: return day < 31; // Septiembre
-            case 2: { // Febrero
-                if (year % 4 == 0) return day < 30;
-                else return day < 29;
-            }
-            default: return day < 32;
-        }*/
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.valueOf(encode());

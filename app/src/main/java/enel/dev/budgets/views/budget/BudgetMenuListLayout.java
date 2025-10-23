@@ -7,8 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,9 +16,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.objects.budget.Budget;
-import enel.dev.budgets.objects.budget.Budgets;
-import enel.dev.budgets.objects.money.Money;
 
 @SuppressLint("ViewConstructor")
 public class BudgetMenuListLayout {

@@ -1,5 +1,6 @@
 package enel.dev.budgets.objects.shoppinglist;
 
+@SuppressWarnings("unused")
 public class Item {
 
     private boolean completed;

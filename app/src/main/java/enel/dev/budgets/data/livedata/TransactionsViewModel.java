@@ -13,6 +13,7 @@ import enel.dev.budgets.data.sql.Controller;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.transaction.Transactions;
 
+@SuppressWarnings("unused")
 public class TransactionsViewModel extends ViewModel {
     private MutableLiveData<Transactions> transactions;
     private MutableLiveData<Boolean> dataLoading;

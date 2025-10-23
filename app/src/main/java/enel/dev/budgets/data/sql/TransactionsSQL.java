@@ -79,7 +79,7 @@ public class TransactionsSQL {
             final Category category = categories.getCategory(col[5]);
             transactions.add(new Transaction(
                     Integer.parseInt(col[0]), // id
-                    category != null ? category : new Category(context.getString(R.string.default_category)), // category
+                    category != null ? category : new Category(), // category
                     new Date(col[4]), // date
                     new Money(col[1], col[2], Double.parseDouble(col[3])), // money
                     col[7], // description

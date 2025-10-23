@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.objects.NumberFormat;
 import enel.dev.budgets.objects.money.Balance;
 import enel.dev.budgets.objects.money.Coin;

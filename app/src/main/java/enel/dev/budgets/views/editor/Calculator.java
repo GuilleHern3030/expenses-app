@@ -2,9 +2,7 @@ package enel.dev.budgets.views.editor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -22,8 +20,8 @@ import java.util.Locale;
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.objects.NumberFormat;
-import enel.dev.budgets.utils.SnackBar;
 
+@SuppressWarnings("unused")
 public class Calculator extends Fragment {
 
     private TextView input;

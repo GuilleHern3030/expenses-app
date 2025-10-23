@@ -2,6 +2,8 @@
     <string name="app_name">Expenses</string>
 
     <string name="web_page_link" translatable="false">https://www.guillenh.com</string>
+    <string name="privacity_link" translatable="false">https://guillehern3030.github.io/privacypolitics/app/expenses.html</string>
+
     <string name="right" translatable="false"><![CDATA[>]]></string>
     <string name="left" translatable="false"><![CDATA[<]]></string>
     <string name="divide" translatable="false">/</string>
@@ -51,7 +53,6 @@
     <string name="transaction_photo">Photo</string>
     <string name="transaction_take_photo">Take photo</string>
     <string name="transaction_select_photo">Select photo</string>
-    <string name="default_category">Others</string>
 
     <!-- Home fragment -->
     <string name="total_month">Total of month</string>
@@ -101,7 +102,7 @@
     <string name="config_security_privacity_description">Read our privacity politics</string>
     <string name="config_information_title">Information</string>
     <string name="config_information_rate">Rate</string>
-    <string name="config_information_rate_description">Déjanos una linda reseña</string>
+    <string name="config_information_rate_description">Put us a nice review</string>
     <string name="config_information_credits">Credits</string>
     <string name="config_information_credits_description">Creator information</string>
     <string name="config_information_widemode">Wide mode</string>

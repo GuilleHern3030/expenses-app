@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import enel.dev.budgets.data.preferences.Preferences;
 
@@ -18,8 +15,6 @@ import enel.dev.budgets.views.home.HomeFragment;
 import enel.dev.budgets.views.password.PasswordFragment;
 
 public class MainActivity extends AppCompatActivity implements Fragment.OnChangeFragmentListener {
-
-    private Fragment fragment;
 
     /**
      * This function is executed when the app is opened and when the screen orientation is changed
@@ -68,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
     }*/
 
     private void showFragment(final Fragment fragment) {
-        this.fragment = fragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, fragment)
@@ -88,13 +82,11 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
     }
 
     public void setWideMode(final boolean wideMode) {
-        Log.d("NAVBAR", "Barra fix");
 
         View rootView = findViewById(R.id.main_activity);
 
         // Listener moderno con WindowInsetsCompat
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-            Log.d("NAVBAR", "Barra fix 1");
 
             // Altura de la barra de navegación inferior
             int navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
@@ -115,12 +107,6 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
                     rootView.getPaddingRight(),
                     wideMode ? navBarHeight + dpToPx(48) : navBarHeight // 16dp extra de margen
             );
-
-            if(navBarHeight > 0){
-                Log.d("NAVBAR", "Barra de navegación detectada. Altura: " + navBarHeight);
-            } else {
-                Log.d("NAVBAR", "Sin barra de navegación (gestos o botones físicos)");
-            }
 
             // Retornamos el insets original para que otros views también lo reciban
             return insets;

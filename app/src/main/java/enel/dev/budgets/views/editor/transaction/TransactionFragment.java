@@ -91,6 +91,9 @@ public class TransactionFragment extends Fragment {
         args.putInt("id", transaction.id());
         args.putInt("index", index);
         args.putString("categoryname", transaction.getCategory().getName());
+        args.putInt("categorycolorid", transaction.getCategory().getColorId());
+        args.putInt("categoryimageid", transaction.getCategory().getImageId());
+        args.putBoolean("categoryincome", transaction.getCategory().isAnIncome());
         args.putString("date", transaction.getDate().toString());
         args.putString("coinname", transaction.getMoney().getCoin().getName());
         args.putDouble("coinamount", transaction.getMoney().getAmount());
@@ -127,7 +130,12 @@ public class TransactionFragment extends Fragment {
             Log.i("TransactionFragment", "isanincome = " + this.isAnIncome);
             Log.i("TransactionFragment", "delete = " + this.deleteOption);
 
-            this.category = categoryName != null ? categories.getCategory(categoryName) : null;
+            //try {
+                this.category = categoryName != null ? categories.getCategory(categoryName) : null;
+            //} catch(Exception doesntExist) {
+            //    this.category = null;
+            //}
+
             this.date = dateEncoded != null ? new Date(dateEncoded) : new Date();
             this.money = coinName != null ?
                     new Money(Controller.balances(requireActivity()).get().getCoin(coinName), coinAmount) :

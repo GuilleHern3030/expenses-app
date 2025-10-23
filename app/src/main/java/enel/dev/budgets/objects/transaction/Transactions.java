@@ -15,6 +15,7 @@ import enel.dev.budgets.objects.money.Money;
  *  Pueden ser transacciones de tipo 'income' o de tipo 'expense' pero no ambas mezcladas
  *  Permite además obtener un resumen de las transacciones
  */
+@SuppressWarnings("unused")
 public class Transactions extends ArrayList<Transaction> {
 
     /**
@@ -196,7 +197,7 @@ public class Transactions extends ArrayList<Transaction> {
 
     /**
      * Obtiene el index de la primera aparición de una categoría
-     * @param category
+     * @param category Categoría que se busca
      * @return Devuelve el index de la primera aparicion de una categoría o -1 si no existe
      */
     public int indexOf(Category category) {

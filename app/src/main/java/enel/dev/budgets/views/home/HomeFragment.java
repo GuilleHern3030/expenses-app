@@ -13,15 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.CalendarView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.livedata.BalanceViewModel;
@@ -422,7 +419,8 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     public void onTransactionCreate(Transaction transaction) {
         hideFragmentAbove();
         transactionsLoaded.add(transaction);
-        balanceLoaded.add(transaction);
+        if (transaction.getDate().isSameMonth(new Date()))
+            balanceLoaded.add(transaction);
         actualizeViews(transactionsLoaded);
         actualizeBalanceList(balanceLoaded, transactionsLoaded);
     }
@@ -430,7 +428,8 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     @Override
     public void onTransactionDelete(Transaction transaction) {
         hideFragmentAbove();
-        balanceLoaded.remove(transaction);
+        if (transaction.getDate().isSameMonth(new Date()))
+            balanceLoaded.remove(transaction);
         transactionsLoaded.remove(transaction);
         actualizeViews(transactionsLoaded);
         actualizeBalanceList(balanceLoaded, transactionsLoaded);

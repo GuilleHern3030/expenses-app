@@ -20,16 +20,10 @@ import android.widget.TextView;
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.data.sql.Controller;
-import enel.dev.budgets.objects.Date;
-import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.objects.debt.Debt;
-import enel.dev.budgets.objects.debt.Debts;
 import enel.dev.budgets.objects.money.Coin;
 import enel.dev.budgets.objects.money.Money;
-import enel.dev.budgets.objects.transaction.Transaction;
 import enel.dev.budgets.utils.SnackBar;
-import enel.dev.budgets.views.editor.debt.CalculatorLayout;
-import enel.dev.budgets.views.editor.transaction.TransactionFragment;
 
 /**
  * A simple {@link Fragment} subclass.

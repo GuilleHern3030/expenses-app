@@ -9,6 +9,7 @@ import enel.dev.budgets.objects.NumberFormat;
  *  Un objeto que representa una cantidad de dinero, en una moneda específica con su respectivo símbolo
  */
 
+@SuppressWarnings("unused")
 public class Money {
 
     private double amount;
@@ -89,6 +90,7 @@ public class Money {
         return symbol + decimalFormat.toString(this.amount);
     }
 
+    @NonNull
     public Money clone() {
         final double moneyAmount = this.amount;
         return new Money(this.coin, moneyAmount);

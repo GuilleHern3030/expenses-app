@@ -13,7 +13,6 @@ import android.widget.Spinner;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.sql.Controller;
-import enel.dev.budgets.objects.category.Categories;
 import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.utils.SnackBar;
 
@@ -39,7 +38,6 @@ public class EditCategory extends CategoryEditorContext {
      * @param category a #Category object
      * @return A new instance of fragment EditCategory.
      */
-    // TODO: Rename and change types and number of parameters
     public static EditCategory newInstance(final Category category, final int index) { // category editor
         EditCategory fragment = new EditCategory();
         Bundle args = new Bundle();

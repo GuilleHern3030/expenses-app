@@ -29,6 +29,7 @@ import enel.dev.budgets.views.editor.Calculator;
  */
 public class BudgetEditor extends BudgetContext {
 
+    private String categoryName;
     private String budgetName;
     private Category category;
     private double initAmount;
@@ -39,6 +40,8 @@ public class BudgetEditor extends BudgetContext {
         args.putDouble("amount", amount);
         args.putString("name", budgetName);
         args.putString("categoryname", category.getName());
+        args.putInt("categorycolorid", category.getColorId());
+        args.putInt("categoryimageid", category.getImageId());
         BudgetEditor fragment = new BudgetEditor();
         fragment.setArguments(args);
         return fragment;
@@ -58,7 +61,11 @@ public class BudgetEditor extends BudgetContext {
         Categories categories = Controller.categories(requireActivity()).get();
         if (getArguments() != null) try {
             this.budgetName = getArguments().getString("name");
-            this.category = categories.getCategory(getArguments().getString("categoryname", ""));
+            this.categoryName = getArguments().getString("categoryname");
+            try { this.category = categories.getCategory(this.categoryName); }
+            catch(Exception ignored) {
+                this.category = new Category(getArguments().getString("categoryname"), getArguments().getInt("categoryimageid"), getArguments().getInt("categorycolorid"));
+            }
             initAmount = getArguments().getDouble("amount", 0);
         } catch(Exception ignored) { }
     }
@@ -111,9 +118,11 @@ public class BudgetEditor extends BudgetContext {
         ImageView categoryIcon = categoryView.findViewById(R.id.icon);
         TextView categoryName = categoryView.findViewById(R.id.text);
 
-        categoryColor.setBackgroundResource(category.getColor());
-        categoryIcon.setImageResource(category.getImage());
-        categoryName.setText(category.getName());
+        try {
+            categoryColor.setBackgroundResource(category.getColor());
+            categoryIcon.setImageResource(category.getImage());
+            categoryName.setText(category.getName());
+        } catch(Exception ignored) { }
 
         categoryFrame.addView(categoryView);
     }
@@ -123,7 +132,7 @@ public class BudgetEditor extends BudgetContext {
     }
 
     private void editBudget(final double amount) {
-        boolean success = BudgetController.edit(requireActivity(), budgetName, category.getName(), amount);
+        boolean success = BudgetController.edit(requireActivity(), budgetName, categoryName, amount);
         editBudget(new Budget(category, amount));
     }
 }

@@ -1,6 +1,5 @@
 package enel.dev.budgets.views.configuration;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,8 +33,6 @@ public abstract class ConfigurationContext extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     protected void back() {

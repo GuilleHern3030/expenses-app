@@ -1,5 +1,7 @@
 package enel.dev.budgets.objects.money;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import enel.dev.budgets.objects.transaction.Transaction;
@@ -8,6 +10,7 @@ import enel.dev.budgets.objects.transaction.Transactions;
 /**
  * Un conjunto de objetos Money
  */
+@SuppressWarnings("unused")
 public class Balance {
 
     private ArrayList<Money> list = new ArrayList<>();
@@ -86,6 +89,7 @@ public class Balance {
         } catch (Exception ignored) { }
     }
 
+    @NonNull
     public Balance clone() {
         return new Balance(list);
     }

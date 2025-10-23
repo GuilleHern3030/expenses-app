@@ -16,11 +16,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.objects.NumberFormat;
 import enel.dev.budgets.objects.money.Balance;
-import enel.dev.budgets.objects.money.Coin;
 import enel.dev.budgets.objects.money.Money;
-import enel.dev.budgets.objects.transaction.Transactions;
 
 @SuppressLint("ViewConstructor")
 public class CoinListLayout {

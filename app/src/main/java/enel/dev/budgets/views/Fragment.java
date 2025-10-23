@@ -19,6 +19,7 @@ import enel.dev.budgets.views.home.HomeFragment;
 import enel.dev.budgets.views.shoppinglist.ShoppinglistFragment;
 import enel.dev.budgets.views.summary.SummaryFragment;
 
+@SuppressWarnings("unused")
 public abstract class Fragment extends androidx.fragment.app.Fragment {
 
     protected Balance balance = new Balance();

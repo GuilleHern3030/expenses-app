@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+@SuppressWarnings("unused")
 public abstract class ListView extends BaseAdapter {
 
     protected final Context context;

@@ -13,6 +13,7 @@ import enel.dev.budgets.objects.money.Money;
  *  Contiene una fecha, una cantidad de dinero, una descripción y una categoría que lo represente
  *  Además, contiene el id donde se almacena en la base de datos
  */
+@SuppressWarnings("unused")
 public class Transaction {
 
     private final static int MAX_CHARACTERS = 130;
@@ -81,6 +82,7 @@ public class Transaction {
     public void addMoney(final double amount) { this.money.setAmount(this.money.getAmount() + amount); }
     public void addMoney(final Money money) { this.money.setAmount(this.money.getAmount() + money.getAmount()); }
 
+    @NonNull
     public Transaction clone() {
         return new Transaction(
                 this.id(),

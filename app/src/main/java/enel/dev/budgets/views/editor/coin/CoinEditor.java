@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.ArrayList;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.sql.Controller;

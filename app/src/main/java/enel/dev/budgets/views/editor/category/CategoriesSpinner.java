@@ -14,7 +14,7 @@ import enel.dev.budgets.objects.category.Categories;
 
 public class CategoriesSpinner extends BaseAdapter {
 
-    private Context context;
+    private final Context context;
     private final Categories categories;
 
     public CategoriesSpinner(Context context, final Categories categories) {

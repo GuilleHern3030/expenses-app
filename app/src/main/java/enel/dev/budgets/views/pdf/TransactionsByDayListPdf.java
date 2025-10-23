@@ -19,6 +19,7 @@ import enel.dev.budgets.objects.transaction.Transactions;
 import enel.dev.budgets.objects.transaction.TransactionsArray;
 
 @SuppressLint("ViewConstructor")
+@SuppressWarnings("unused")
 public class TransactionsByDayListPdf {
 
     private Transactions transactions;

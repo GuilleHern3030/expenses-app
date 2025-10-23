@@ -6,12 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.print.pdf.PrintedPdfDocument;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 
 import androidx.core.content.FileProvider;
 

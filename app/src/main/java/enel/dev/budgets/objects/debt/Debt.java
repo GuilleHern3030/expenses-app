@@ -5,6 +5,7 @@ import enel.dev.budgets.objects.money.Money;
 /**
  *
  */
+@SuppressWarnings("unused")
 public class Debt {
 
     private String lender;

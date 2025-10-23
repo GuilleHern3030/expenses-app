@@ -5,7 +5,6 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -117,16 +116,21 @@ public class BudgetListLayout {
             final Money amountTransactioned,
             final Money amountBudgeted) {
 
-        textView.setText(getFormatedText(amountTransactioned, decimalFormat) + "   /");
-        textView2.setText(getFormatedText(amountBudgeted, decimalFormat));
-        
-        progressBar.setProgress(100 - (int)(amountTransactioned.getAmount() * 100 / amountBudgeted.getAmount()), true);
+        try {
+            textView.setText(getFormatedText(amountTransactioned, decimalFormat) + "   /");
+            textView2.setText(getFormatedText(amountBudgeted, decimalFormat));
+            progressBar.setProgress(100 - (int) (amountTransactioned.getAmount() * 100 / amountBudgeted.getAmount()), true);
+        } catch(Exception ignored) { }
     }
 
     private String getFormatedText(final Money money, final NumberFormat decimalFormat) {
-        return money.getAmount() > 100000 && decimalFormat.withDecimals() ?
-                money.toString(decimalFormat).split(String.valueOf(decimalFormat.decimalSeparator()))[0] :
-                money.toString(decimalFormat);
+        try {
+            return money.getAmount() > 100000 && decimalFormat.withDecimals() ?
+                    money.toString(decimalFormat).split(String.valueOf(decimalFormat.decimalSeparator()))[0] :
+                    money.toString(decimalFormat);
+        } catch(Exception ignored) { // TODO: Cuando se usa un '.' como decimal, falla (parcheo esto para que se muestre el numero completo)
+            return money.toString(decimalFormat);
+        }
     }
 
     // Listener
