@@ -11,11 +11,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.sql.Controller;
 import enel.dev.budgets.objects.budget.Budget;
-import enel.dev.budgets.objects.budget.Budgets;
-import enel.dev.budgets.objects.category.Categories;
-import enel.dev.budgets.objects.category.Category;
 
 public abstract class BudgetContext extends Fragment {
 

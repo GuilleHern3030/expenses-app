@@ -22,6 +22,7 @@ import enel.dev.budgets.objects.category.Categories;
 import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.objects.money.Money;
 import enel.dev.budgets.objects.transaction.Transaction;
+import enel.dev.budgets.utils.SnackBar;
 
 public class DeleteLayout extends Fragment {
 
@@ -114,9 +115,26 @@ public class DeleteLayout extends Fragment {
         amount.setText(money.toString(Preferences.decimalFormat(requireActivity())));
 
         view.findViewById(R.id.bAccept).setOnClickListener(v -> {
-            Controller.transactions(requireActivity()).delete(id, date.toString());
+            Controller.transactions(requireActivity()).delete(id, date.toString(), new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded())
+                        listener.onSuccessDelete();
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded())
+                        SnackBar.show(requireActivity(), getView(), error);
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded())
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                }
+            });
             // Controller.deleteTransactionPhoto(requireActivity(), id, date.toString()); // TODO
-            listener.onSuccessDelete();
         });
 
         view.findViewById(R.id.bCancel).setOnClickListener(v -> listener.onCancelDelete());

@@ -25,6 +25,7 @@
                 app:cardBackgroundColor="@color/cardview_container">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/category_content_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -147,6 +148,23 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+                <ProgressBar
+                    android:id="@+id/category_loading_view"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="32dp"/>
+
+                <TextView
+                    android:id="@+id/tvError"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red"
+                    android:padding="8dp"
+                    android:textColor="@color/black"/>
 
             </androidx.cardview.widget.CardView>
 

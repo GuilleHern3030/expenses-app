@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.sql.BudgetController;
+import enel.dev.budgets.data.sql.local.BudgetController;
 import enel.dev.budgets.data.sql.Controller;
 import enel.dev.budgets.objects.budget.Budget;
 import enel.dev.budgets.objects.budget.Budgets;

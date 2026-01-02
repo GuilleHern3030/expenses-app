@@ -279,5 +279,6 @@
     <string name="transaction_take_photo">Fare foto</string>
     <string name="transaction_select_photo">Seleccione Foto</string>
     <string name="transaction_photo">Foto</string>
+    <string name="add_reserve">Riserva</string>
 
 </resources>

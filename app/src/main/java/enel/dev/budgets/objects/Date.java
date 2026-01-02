@@ -197,9 +197,9 @@ public class Date {
      */
     public Date nextMonth() {
         try {
-            return isValidDay(day, month + 1, year) ?
-                    new Date(year, month + 1, day, hour):
-                    new Date(year + 1, 1, day, hour);
+            return isValidDay(1, month + 1, year) ?
+                    new Date(year, month + 1, Math.min(day, maxDay(month + 1, year)), hour):
+                    new Date(year + 1, 1, Math.min(day, maxDay(month + 1, year)), hour);
         } catch(Exception ignored) {
             return this;
         }
@@ -211,9 +211,9 @@ public class Date {
      */
     public Date lastMonth() {
         try {
-            return isValidDay(day, month - 1, year) ?
-                    new Date(year, month - 1, day, hour):
-                    new Date(year - 1, 12, day, hour);
+            return isValidDay(1, month - 1, year) ?
+                    new Date(year, month - 1, Math.min(day, maxDay(month + 1, year)), hour):
+                    new Date(year - 1, 12, Math.min(day, maxDay(month + 1, year)), hour);
         } catch(Exception ignored) {
             return this;
         }
@@ -268,7 +268,7 @@ public class Date {
         return date.length() == 1 ? "0" + date : date;
     }
 
-    private static int maxDay(final int month, final int year) {
+    public static int maxDay(final int month, final int year) {
         switch (month) {
             case 11:
             case 9:

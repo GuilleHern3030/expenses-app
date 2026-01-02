@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import enel.dev.budgets.data.sql.Controller;
-import enel.dev.budgets.data.sql.ShoppingListSQL;
 import enel.dev.budgets.objects.shoppinglist.ShoppingListArray;
 
 public class ShoppingListsViewModel extends ViewModel {

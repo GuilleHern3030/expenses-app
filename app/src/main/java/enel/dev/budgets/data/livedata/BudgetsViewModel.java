@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import enel.dev.budgets.data.sql.BudgetController;
+import enel.dev.budgets.data.sql.local.BudgetController;
 import enel.dev.budgets.data.sql.Controller;
 import enel.dev.budgets.objects.budget.Budgets;
 import enel.dev.budgets.objects.transaction.Transactions;
@@ -51,7 +51,7 @@ public class BudgetsViewModel extends ViewModel {
         executorService.submit(() -> {
 
             Budgets budgetsLoaded = BudgetController.get(context, id);
-            Transactions transactionsLoaded = Controller.transactions(context).get().expenses().getCategoriesSorted();
+            Transactions transactionsLoaded = Controller.localTransactions(context).get().expenses().getCategoriesSorted();
             ArrayList<String> budgetsListLoaded = BudgetController.budgets(context);
 
             budgetsList.postValue(budgetsListLoaded);
@@ -67,7 +67,7 @@ public class BudgetsViewModel extends ViewModel {
         executorService.submit(() -> {
 
             Budgets budgetsLoaded = BudgetController.get(context, budgetName);
-            Transactions transactionsLoaded = Controller.transactions(context).get().expenses().getCategoriesSorted();
+            Transactions transactionsLoaded = Controller.localTransactions(context).get().expenses().getCategoriesSorted();
             ArrayList<String> budgetsListLoaded = BudgetController.budgets(context);
 
             budgetsList.postValue(budgetsListLoaded);

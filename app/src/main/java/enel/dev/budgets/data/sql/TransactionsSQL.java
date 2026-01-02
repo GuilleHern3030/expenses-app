@@ -1,292 +1,77 @@
 package enel.dev.budgets.data.sql;
 
-import static enel.dev.budgets.data.sql.Controller.DATA_BASE;
-import static enel.dev.budgets.data.sql.Controller.transactions;
-
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import enel.dev.budgets.R;
 import enel.dev.budgets.objects.Date;
-import enel.dev.budgets.objects.category.Categories;
-import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.objects.money.Coin;
-import enel.dev.budgets.objects.money.Money;
 import enel.dev.budgets.objects.transaction.Transaction;
 import enel.dev.budgets.objects.transaction.Transactions;
 
-public class TransactionsSQL {
+public abstract class TransactionsSQL {
 
-    private final Context context;
+    protected final Context context;
+    protected final String DATA_BASE;
 
-    public TransactionsSQL(final Context context) {
+    public TransactionsSQL(final Context context, final String dbName) {
         this.context = context;
+        this.DATA_BASE = dbName;
     }
 
-    private static void createTransactionsTable(@NonNull BasicSQL sql, @NonNull Date date) {
-        sql.tablaCrear(transactionsTableName(date.getYear(), date.getMonth()), new String[]{
-                "id",
-                "coinname",
-                "coinsymbol",
-                "amount",
-                "date",
-                "category",
-                "isanincome",
-                "description",
-                "photouri"
-        });
+    public interface TransactionCallback {
+        void onSuccess(final Transaction transactionResult);
+        void onError(final String error);
+        void onNetworkError();
     }
 
-    /**
-     * Obtiene el nombre de la tabla según el mes y año en que se busca.
-     * Las columnas son:
-     *          0- id
-     *          1- coinname: nombre de la moneda
-     *          2- coinsymbol: simbolo de la moneda
-     *          3- amount: cantidad de dinero (double)
-     *          4- date (encoded)
-     *          5- category: nombre de la categoría
-     *          6- isincome: es un 'income'? (1 para sí)
-     *          7- description: descripcion de la transaccion
-     *          8- photouri: uri de la foto relacionada
-     * @param year año
-     * @param month (1 es Enero, 12 es Diciembre)
-     * @return Devuelve el nombre tal como se guarda en la base de datos, según el año y mes.
-     */
-    private static String transactionsTableName(final int year, final int month) {
-        return "MONTH_" + month + "_" + year;
+    public interface TransactionsCallback {
+        void onSuccess(final Transactions transactionResult);
+        void onFailure(final int errorCode);
     }
 
     /**
      * Obtener todas las transacciones de un mes específico
-     * @param year
-     * @param month
-     * @return
+     * @param year Año
+     * @param month Mes
      */
-    public Transactions get(final int year, final int month) {
-        final Transactions transactions = new Transactions();
-        final String tableName = transactionsTableName(year, month);
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        final int rows = sql.tablaFilas(tableName);
-        final Categories categories = CategoriesSQL.getCategories(sql);
-        if (rows > 0) for (int row = 0; row < rows; row++) try {
-            final String[] col = sql.tablaObtenerFila(tableName, row);
-            final Category category = categories.getCategory(col[5]);
-            transactions.add(new Transaction(
-                    Integer.parseInt(col[0]), // id
-                    category != null ? category : new Category(), // category
-                    new Date(col[4]), // date
-                    new Money(col[1], col[2], Double.parseDouble(col[3])), // money
-                    col[7], // description
-                    Integer.parseInt(col[6]) == 1, // is an income?
-                    col[8] // photouri
-            ));
-        } catch(Exception ignored) { }
-        sql.cerrar();
-        return transactions;
-    }
+    public abstract void get(final int year, final int month, final TransactionsCallback callback);
 
     /**
      * Obtener todas las transacciones de un mes específico
-     * @param date
-     * @return
+     * @param date Fecha
      */
-    public Transactions get(final Date date) {
-        return get(date.getYear(), date.getMonth());
-    }
-
-    /**
-     * Obtener todas las transacciones de un período de tiempo específico
-     * @param initDate
-     * @param endDate
-     * @return
-     */
-    public Transactions get(@NonNull final Date initDate, @NonNull final Date endDate) {
-        final Transactions transactions = new Transactions();
-        if (initDate.isAfter(endDate)) return transactions;
-        Date date = initDate;
-        while (date.encode() < endDate.encode()) try {
-            Transactions tmpTransactions = get(date.getYear(), date.getMonth());
-            for (Transaction transaction : tmpTransactions)
-                if (transaction.getDate().encode() < endDate.encode() && transaction.getDate().encode() > initDate.encode())
-                    transactions.add(transaction);
-            date = date.nextMonth();
-        } catch (Exception e) { Log.e("CONTROLLER", "Controller.getTransactions error", e); }
-        return transactions;
+    public void get(final Date date, final TransactionsCallback callback) {
+        get(date.getYear(), date.getMonth(), callback);
     }
 
     /**
      * Obtener todas las transacciones del mes corriente
-     * @return
      */
-    public Transactions get() {
+    public void get(final TransactionsCallback callback) {
         final Date currentDate = new Date();
-        return get(currentDate.getYear(), currentDate.getMonth());
+        get(currentDate.getYear(), currentDate.getMonth(), callback);
     }
 
-    public boolean add(final Transaction transaction) {
-        if (transaction == null || transaction.id() == -1) return false;
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        final String tableName = transactionsTableName(transaction.getDate().getYear(), transaction.getDate().getMonth());
-        if (!sql.tablaExiste(tableName))
-            createTransactionsTable(sql, transaction.getDate());
-        String[] data = new String[]{
-                String.valueOf(transaction.id()), // ID
-                transaction.getMoney().name(), // coin name
-                transaction.getMoney().getCoin().getSymbol(), // coin symbol
-                String.valueOf(transaction.getMoney().getAmount()), // amount
-                transaction.getDate().toString(), // date encoded
-                transaction.getCategory().getName(), // category name
-                transaction.isAnIncome() ? "1" : "0", // isAnIncome
-                transaction.getDescription(), // description
-                transaction.getPhotoUri()
-        };
-        final int newRow = sql.tablaIngresarFila(tableName, data);
-        sql.cerrar();
-        return newRow >= 0;
-    }
+    /**
+     * Obtener todas las transacciones de un período de tiempo específico
+     * @param initDate Fecha inicial
+     * @param endDate Fecha final
+     */
+    public abstract void get(@NonNull final Date initDate, @NonNull final Date endDate, final TransactionsCallback callback);
+
+    public abstract void add(final Transaction transaction, final TransactionCallback callback);
 
     /**
      * Edita la información de una transacción sin modificar el mes de la transacción
      * @param transaction Transacción con la nueva información
-     * @return devuelve TRUE si la edición fue exitosa
      */
-    public boolean edit(final Transaction transaction) {
-        if (transaction == null) return false;
-        boolean success = false;
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        final String tableName = transactionsTableName(transaction.getDate().getYear(), transaction.getDate().getMonth());
-        if (sql.tablaExiste(tableName)) {
-            final int row = sql.tablaBuscarFila(tableName, "id", String.valueOf(transaction.id()), true);
-            if (row >= 0)
-                success = sql.tablaEditarFila(tableName, row, new String[]{
-                        String.valueOf(transaction.id()), // ID
-                        transaction.getMoney().name(), // coin name
-                        transaction.getMoney().getCoin().getSymbol(), // coin symbol
-                        String.valueOf(transaction.getMoney().getAmount()), // amount
-                        transaction.getDate().toString(), // date encoded
-                        transaction.getCategory().getName(), // category name
-                        transaction.isAnIncome() ? "1" : "0", // isAnIncome
-                        transaction.getDescription(), // description
-                        transaction.getPhotoUri()
-                });
-        }
-        sql.cerrar();
-        return success;
-    }
+    public abstract void edit(final Transaction oldTransaction, final Transaction transaction, final TransactionCallback callback);
 
-    /**
-     * Mueve una transacción a una nueva fecha, lo cual provocará un cambio en el ID de la transacción
-     * @param transaction Transacción que se quiere mover (no se modificará ninguno de sus datos)
-     * @param oldDate Fecha donde se encuentra la transacción actualmente
-     * @param newDate Fecha a donde se moverá la transacción sin modificar sus datos internos
-     * @return nuevo ID de la transacción
-     */
-    public int move(final Transaction transaction, final Date oldDate, final Date newDate) {
-        final int unusedId = getUnusedId(newDate);
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        try {
-            final String oldTableName = transactionsTableName(oldDate.getYear(), oldDate.getMonth());
-            final String newTableName = transactionsTableName(transaction.getDate().getYear(), transaction.getDate().getMonth());
-            if (sql.tablaExiste(oldTableName)) {
-                final int oldRow = sql.tablaBuscarFila(oldTableName, "id", String.valueOf(transaction.id()), true);
-                if (oldRow >= 0) sql.tablaEliminarFila(oldTableName, oldRow, true);
-                else throw new Exception();
-            }
-            if (!sql.tablaExiste(newTableName))
-                createTransactionsTable(sql, transaction.getDate());
-            sql.tablaIngresarFila(newTableName, new String[]{
-                    String.valueOf(unusedId), // ID
-                    transaction.getMoney().name(), // coin name
-                    transaction.getMoney().getCoin().getSymbol(), // coin symbol
-                    String.valueOf(transaction.getMoney().getAmount()), // amount
-                    transaction.getDate().toString(), // date encoded
-                    transaction.getCategory().getName(), // category name
-                    transaction.isAnIncome() ? "1" : "0", // isAnIncome
-                    transaction.getDescription(), // description
-                    transaction.getPhotoUri()
-            });
-            return unusedId;
-        } catch(Exception ignored) { }
-        sql.cerrar();
-        return -1;
-    }
+    public abstract void delete(final int id, final String dateEncoded, final Controller.SQLcallback callback);
 
-    private int getUnusedId(final Date date) {
-        Transactions transactions = get(date);
-        return transactions.getUnusedId();
-    }
+    public abstract void deleteCoin(final Coin coin);
 
-    public boolean delete(final int id, final String dateEncoded) {
-        if (dateEncoded == null || id < 0) return false;
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        try {
-            final Date date = new Date(dateEncoded);
-            final String tableName = transactionsTableName(date.getYear(), date.getMonth());
-            if (sql.tablaExiste(tableName)) {
-                final int row = sql.tablaBuscarFila(tableName, "id", String.valueOf(id), false);
-                if (row >= 0)
-                    return sql.tablaEliminarFila(tableName, row, true);
-            }
-        } catch(Exception ignored) { }
-        sql.cerrar();
-        return false;
-    }
-
-    private String[] transactionsTables(final BasicSQL sql) {
-        final String[] tables = sql.listarTablas();
-        final ArrayList<String> monthsArrayList = new ArrayList<>();
-        for (String table : tables)
-            if (table.startsWith("MONTH"))
-                monthsArrayList.add(table);
-        final String[] months = new String[monthsArrayList.size()];
-        for (int i = 0; i < monthsArrayList.size(); i++)
-            months[i] = monthsArrayList.get(i);
-        return months;
-    }
-
-    public void deleteCoin(final Coin coin) {
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        final String[] months = transactionsTables(sql);
-        Log.d("TRANSACTIONS_TABLES", Arrays.toString(months));
-        if (coin != null) try {
-            for (String month : months) {
-                final int[] rows = sql.tablaBuscarFilas(month, "coinname", coin.getName(), false);
-                for (int row : rows) sql.tablaEliminarFila(month, row, false);
-            }
-        } catch (Exception e) { Log.e(getClass().getName(), "deleteCoin: ", e); }
-        sql.cerrar();
-    }
-
-    public void editCoin(final Coin oldCoin, final Coin newCoin) {
-        final BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        final String[] months = transactionsTables(sql);
-        Log.d("TRANSACTIONS_TABLES", Arrays.toString(months));
-        if (oldCoin != null && newCoin != null) try {
-            for (String month : months) {
-                final int[] rows = sql.tablaBuscarFilas(month, "coinname", oldCoin.getName(), false);
-                for (int row : rows) {
-                    final String[] data = sql.tablaObtenerFila(month, row);
-                    sql.tablaEditarFila(month, row, new String[]{
-                            data[0], // id
-                            newCoin.getName(),
-                            newCoin.getSymbol(),
-                            data[3], // amount
-                            data[4], // date
-                            data[5], // category
-                            data[6], // isincome
-                            data[7], // description
-                            data[8]  // photouri
-                    });
-                }
-            }
-        } catch (Exception e) { Log.e(getClass().getName(), "deleteCoin: ", e); }
-        sql.cerrar();
-    }
+    public abstract void editCoin(final Coin oldCoin, final Coin newCoin);
 
 }

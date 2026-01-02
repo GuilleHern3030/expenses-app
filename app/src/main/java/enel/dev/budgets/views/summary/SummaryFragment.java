@@ -2,6 +2,7 @@ package enel.dev.budgets.views.summary;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
     private SummaryListLayout summaryExpenses;
     private SummaryListLayout summaryIncomes;
     private SummaryView summaryBalance;
+    private View errorFrame;
 
 
     public static SummaryFragment newInstance(final Category category) {
@@ -108,6 +110,8 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
         summaryIncomes.setOnCategoryClick(this);
         summaryExpenses.setOnCategoryClick(this);
 
+        errorFrame = view.findViewById(R.id.error_layout);
+
         return view;
     }
 
@@ -137,7 +141,7 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
 
         final TransactionsViewModel transactionViewModel = new TransactionsViewModel(); //new ViewModelProvider(this).get(TransactionsViewModel.class);
 
-        if (initDate.encode() == endDate.encode())
+        if (initDate.encode() == endDate.encode()) // Leer mes completo
             transactionViewModel.loadTransactions(requireActivity(), initDate);
         else
             transactionViewModel.loadTransactions(requireActivity(), initDate, endDate);
@@ -152,11 +156,15 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
                 summaryBalance.hide();
                 summaryExpenses.hide();
                 summaryIncomes.hide();
+                errorFrame.setVisibility(View.GONE);
             }
         });
 
         transactionViewModel.getTransactions().observe(getViewLifecycleOwner(), transactionList -> {
-            if (transactionViewModel.isSameDate(date, date2)) {
+
+            if (transactionViewModel.isSameDate(date, date2)) try {
+
+                Log.d("LOAD_TRANSACTION", "SummaryFragment getted " + transactionList.length());
 
                 final Transactions transactions = transactionList.filterCoin(Preferences.defaultCoin(requireActivity()).getName());
                 transactionViewModel.removeData();
@@ -182,6 +190,13 @@ public class SummaryFragment extends Fragment implements TransactionFragment.OnT
 
                 loadSummary(summaryExpenses, transactions.expenses().getCategoriesSorted());
                 loadSummary(summaryIncomes, transactions.incomes().getCategoriesSorted());
+
+            } catch (Exception e) {
+                errorFrame.setVisibility(View.VISIBLE);
+                summaryEmpty.setVisibility(View.GONE);
+                loadingView.setVisibility(View.GONE);
+                requireView().findViewById(R.id.floatingButton).setVisibility(View.GONE);
+                requireView().findViewById(R.id.transactions).setVisibility(View.GONE);
             }
         });
     }

@@ -1,21 +1,49 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+#############################################
+# RETROFIT (OBLIGATORIO)
+#############################################
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Mantener información genérica (CRÍTICO)
+-keepattributes Signature
+-keepattributes Exceptions
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Mantener anotaciones de runtime
+-keepattributes RuntimeVisibleAnnotations
+-keepattributes RuntimeVisibleParameterAnnotations
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Mantener interfaces de Retrofit
+-keep interface retrofit2.** { *; }
+
+# Mantener métodos anotados con HTTP
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+#############################################
+# OKHTTP
+#############################################
+
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+#############################################
+# GSON
+#############################################
+
+# Mantener modelos serializados
+-keep class com.google.gson.** { *; }
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+#############################################
+# TU APP (MODELOS USADOS POR LA API)
+#############################################
+
+# Ajustá el paquete si lo movés
+-keep class enel.dev.budgets.data.** { *; }
+
+#############################################
+# ANDROID (SEGURIDAD)
+#############################################
+
+-dontwarn javax.annotation.**

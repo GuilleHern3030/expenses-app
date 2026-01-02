@@ -46,6 +46,7 @@ public class DebtFragment extends Fragment {
     private EditText etDescription;
 
     private Coin coin;
+    private boolean fetching = false;
 
     public DebtFragment() {
         // Required empty public constructor
@@ -142,10 +143,13 @@ public class DebtFragment extends Fragment {
         view.findViewById(R.id.bCancelOperation).setOnClickListener(v -> cancelOperation());
         view.findViewById(R.id.bDelete).setOnClickListener(v -> deleteDebt());
         view.findViewById(R.id.bChangeDebt).setOnClickListener(v -> {
-            if(id >= 0)
-                editDebt();
-            else
-                createDebt();
+            if (!fetching) {
+                fetching = true;
+                if (id >= 0)
+                    editDebt();
+                else
+                    createDebt();
+            }
         });
 
         if (this.id >= 0)
@@ -165,8 +169,32 @@ public class DebtFragment extends Fragment {
                     id,
                     etLenderName.getText().toString(),
                     money,
-                    etDescription.getText().toString()));
-            successOperation();
+                    etDescription.getText().toString()),
+                    new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        successOperation();
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), error);
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
         } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.debt_requires));
     }
 
@@ -178,8 +206,31 @@ public class DebtFragment extends Fragment {
                     etLenderName.getText().toString(),
                     money,
                     etDescription.getText().toString()
-            ));
-            successOperation();
+            ), new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        successOperation();
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), error);
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
         } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.debt_requires));
     }
 
@@ -192,9 +243,29 @@ public class DebtFragment extends Fragment {
         fragment.setOnDeleteListener(new DeleteLayout.OnDeleteListener() {
             @Override
             public void onSuccessDelete() {
-                Controller.debts(requireActivity()).delete(id);
                 hideFragmentAbove();
                 successOperation();
+                /*Controller.debts(requireActivity()).delete(id, new Controller.SQLcallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (isAdded()) {
+                            hideFragmentAbove();
+                            successOperation();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        if (isAdded())
+                            SnackBar.show(requireActivity(), getView(), error);
+                    }
+
+                    @Override
+                    public void onNetworkError() {
+                        if (isAdded())
+                            SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                });*/
             }
 
             @Override

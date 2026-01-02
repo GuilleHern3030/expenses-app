@@ -30,6 +30,8 @@ public abstract class CategoryEditorContext extends Fragment {
 
     protected int index;
 
+    private boolean fetching = false;
+
     // Category attributes
     protected Category oldCategory; // isAnIncome
     protected String categoryName;
@@ -96,26 +98,95 @@ public abstract class CategoryEditorContext extends Fragment {
     }
 
     protected void resultCategoryCreate(final Category category) {
-        boolean success = Controller.categories(requireActivity()).add(category);
-        if (success) {
-            if (subListener != null) subListener.onCategoryCreated(category);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.category_operation_failed));
+        if (!fetching) {
+            fetching = true;
+
+            final Fragment fragment = this;
+            Controller.categories(requireActivity()).add(category, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        if (subListener != null) subListener.onCategoryCreated(category);
+                        getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), error);
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
+        }
     }
 
     protected void resultCategoryDelete(final Category category) {
-        boolean success = Controller.categories(requireActivity()).delete(category);
-        if (success) {
-            if (subListener != null) subListener.onCategoryDeleted(category);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.category_operation_failed));
+        final Fragment fragment = this;
+        Controller.categories(requireActivity()).delete(category, new Controller.SQLcallback() {
+            @Override
+            public void onSuccess() {
+                if (isAdded()) {
+                    if (subListener != null) subListener.onCategoryDeleted(category);
+                    getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                if (isAdded())
+                    SnackBar.show(requireActivity(), getView(), error);
+            }
+
+            @Override
+            public void onNetworkError() {
+                if (isAdded())
+                    SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+            }
+        });
     }
 
     protected void resultCategoryEdit(final Category oldCategory, final Category category) {
-        boolean success = Controller.categories(requireActivity()).edit(oldCategory.getName(), category);
-        if (success) {
-            if (subListener != null) subListener.onCategoryEdited(oldCategory, category);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.category_operation_failed));
+        if (!fetching) {
+            fetching = true;
+            final Fragment fragment = this;
+            Controller.categories(requireActivity()).edit(oldCategory.getName(), category, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        if (subListener != null)
+                            subListener.onCategoryEdited(oldCategory, category);
+                        getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), error);
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
+        }
     }
 }

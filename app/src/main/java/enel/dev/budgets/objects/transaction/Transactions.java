@@ -70,6 +70,19 @@ public class Transactions extends ArrayList<Transaction> {
     }
 
     /**
+     * Obtiene todas las transacciones en el rango de fecha buscado
+     * @return Devuelve un conjunto de transacciones
+     */
+    public Transactions filterDate(final Date initDate, final Date endDate) {
+        Transactions transactions = new Transactions();
+        for (int i = 0; i < this.size(); i++)
+            if(this.get(i).getDate().isAfter(initDate)
+            && this.get(i).getDate().isBefore(endDate))
+                transactions.add(this.get(i).clone());
+        return transactions;
+    }
+
+    /**
      * Obtiene todas las transacciones de tipo 'income'
      * @return Devuelve un conjunto de transacciones de tipo 'income'
      */
@@ -230,6 +243,11 @@ public class Transactions extends ArrayList<Transaction> {
 
     public boolean exists(Category category) {
         return indexOf(category) != -1;
+    }
+
+    @NonNull
+    public String toString() {
+        return this.toString();
     }
 
     //<editor-fold defaultstate="collapsed" desc=" Private functions ">

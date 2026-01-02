@@ -52,6 +52,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/bAddReserve"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/white"
+            android:text="@string/add_reserve"
+            android:backgroundTint="@color/button_reserve"
+            android:textSize="18sp"
+            android:paddingVertical="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/bAddDebt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ImageButton
             android:id="@+id/bExit"
             android:layout_width="56dp"

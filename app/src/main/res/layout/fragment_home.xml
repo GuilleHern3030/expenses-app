@@ -69,6 +69,14 @@
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginEnd="12dp"
                         android:foreground="@drawable/configuration" />
+
+                    <ImageView
+                        android:id="@+id/bSync"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="62dp"
+                        android:src="@drawable/sync_white" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -571,6 +579,53 @@
 
                                     </LinearLayout>
                                 </LinearLayout>
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/reserves_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="24dp"
+                        android:minHeight="32dp"
+                        android:padding="3dp"
+                        app:cardBackgroundColor="@color/cardview_container">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:minHeight="32dp"
+                            android:padding="3dp"
+                            app:cardBackgroundColor="@color/cardview_background">
+
+                            <LinearLayout
+                                android:id="@+id/frameReserves"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@color/button_income"
+                                    android:gravity="center"
+                                    android:paddingVertical="2dp"
+                                    android:text="@string/reserves"
+                                    android:textColor="@color/cardview_title_foreground"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/reserve_list"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical" />
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>

@@ -5,6 +5,7 @@
     <string name="incomes">Ingresos</string>
     <string name="debts">Deudas</string>
 
+    <string name="reserves">Reservas</string>
     <string name="loading">Cargando</string>
     <string name="calculating">Calculando…</string>
     <string name="commingson">Próximamente…</string>
@@ -56,6 +57,7 @@
     <string name="transactions_today">Transacciones de hoy</string>
     <string name="transactions_empty">No hay transacciones hoy</string>
     <string name="debts_empty">No hay deudas</string>
+    <string name="reserves_empty">No hay reservas</string>
     <string name="balance_empty">No hay balance disponible</string>
     <string name="summary_empty">No hay transacciones registradas aún</string>
 
@@ -116,6 +118,30 @@
     <string name="config_invoice_payment">Pagos</string>
     <string name="config_invoice_payment_description">Métodos de pago</string>
 
+    <string name="unsync">Desincronizar</string>
+    <string name="sync_code_required">Se necesita el código de sincronización</string>
+    <string name="sync">Sincronizar</string>
+    <string name="sync_code">Código</string>
+    <string name="sync_signed">Mi cuenta</string>
+    <string name="sync_user">Usuario</string>
+    <string name="sync_sign_in">Iniciar sesión</string>
+    <string name="sync_sign_out">Cerrar sesión</string>
+    <string name="sync_premium">Premium</string>
+    <string name="sync_premium_description">Con una cuenta premium, podrás sincronizar tus gastos con otra persona</string>
+    <string name="sync_synchronize">Sincronizar con otro</string>
+    <string name="sync_synchronize_description">Si tienes un código de sincronización, puedes sincronizar tus gastos con otra persona</string>
+    <string name="sync_synchronized_description">Ya estás sincronizado</string>
+    <string name="synchronize_code_error">Tu código de sincronización expiró</string>
+    <string name="sync_pull_no_data">No hay información disponible</string>
+    <string name="sync_pull_server_error">Error interno</string>
+    <string name="network_error">Error de conexión</string>
+    <string name="synchronize_pair_not_found">Código de sincronización inválido</string>
+    <string name="synchronize_code_not_found">No tienes un código de sincronización configurado</string>
+    <string name="synchronizing_already">Ya estás sincronizando</string>
+    <string name="sync_cloud">Nube</string>
+    <string name="sync_cloud_description">Usar almacenamiento en la nube</string>
+    <string name="sync_cloud_instruction">Debes reiniciar la aplicación para aplicar los cambios</string>
+    <string name="sync_button_restart">Reiniciar</string>
     <string name="principal_coin">Moneda principal</string>
     <string name="coin_name">Nombre de tu moneda</string>
     <string name="coin_symbol">Símbolo de tu moneda</string>
@@ -203,6 +229,12 @@
     <string name="want_delete_debt">¿Quieres eliminar esta deuda?</string>
 
     <!-- Budgets -->
+    <string name="reserve_editor_title">Editor de reserva</string>
+    <string name="reserve_name">Nombre de la reserva</string>
+    <string name="reserve_amount">Cantidad de reserva</string>
+    <string name="reserve_delete_success">Reserva borrada</string>
+    <string name="want_delete_reserve">¿Deseas borrar esta reserva?</string>
+    <string name="reserve_requires">La cantidad no puede estar vacía</string>
     <string name="budgets_empty">No hay presupuesto aún. Puedes agregar un presupuesto presionando el botón +.</string>
     <string name="budget_empty">No hay categorías asignadas aún. Puedes agregar una categoría presionando el botón +.</string>
     <string name="budget_input_name">Nombre de la lista de presupuesto</string>
@@ -278,5 +310,9 @@
     <string name="transaction_take_photo">Tomar foto</string>
     <string name="transaction_select_photo">Seleccionar foto</string>
     <string name="transaction_photo">Foto</string>
+    <string name="add_reserve">Reserva</string>
+    <string name="sync_synchronized">Sincronizado</string>
+    <string name="synchronizing">Sincronizando</string>
+    <string name="sync_canceled">Sincronización cancelada</string>
 
 </resources>

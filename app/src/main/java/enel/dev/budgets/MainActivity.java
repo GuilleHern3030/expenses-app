@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import enel.dev.budgets.data.preferences.Preferences;
 
 import enel.dev.budgets.data.sql.Controller;
+import enel.dev.budgets.data.sql.UserController;
 import enel.dev.budgets.views.Fragment;
 import enel.dev.budgets.views.home.HomeFragment;
 import enel.dev.budgets.views.password.PasswordFragment;
+import enel.dev.budgets.views.sync.LoadingFragment;
 
 public class MainActivity extends AppCompatActivity implements Fragment.OnChangeFragmentListener {
 
@@ -27,18 +31,18 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadDefaultData();
+        loadDefaultData(savedInstanceState);
 
-        setWideMode(Preferences.wideMode(this));
+        //setWideMode(Preferences.wideMode(this));
 
         // Initial fragment
-        final String password = Preferences.password(this);
+        /*final String password = Preferences.password(this);
         if (savedInstanceState == null) {
             if (password != null && password.length() > 0)
                 showFragment(PasswordFragment.newInstance(password));
             else
                 showFragment(HomeFragment.newInstance());
-        }
+        }*/
 
     }
 
@@ -71,9 +75,41 @@ public class MainActivity extends AppCompatActivity implements Fragment.OnChange
         //fixNavButtonsEx(findViewById(R.id.main_activity));
     }
 
-    private void loadDefaultData() {
-        Preferences.loadDefaultData(this);
-        Controller.loadDefaultData(this);
+    private void showFirstFragment(final Bundle savedInstanceState) {
+        final String password = Preferences.password(this);
+        if (savedInstanceState == null) {
+            if (password != null && password.length() > 0)
+                showFragment(PasswordFragment.newInstance(password));
+            else
+                showFragment(HomeFragment.newInstance());
+        }
+    }
+
+    private void showLoadFragment(final Bundle savedInstanceState) {
+        final LoadingFragment fragment = LoadingFragment.newInstance();
+        fragment.setOnLoadFinishListener(new LoadingFragment.OnLoadFinished() {
+            @Override
+            public void onSuccess() {
+                showFirstFragment(savedInstanceState);
+            }
+
+            @Override
+            public void onFailure(String errorText) {
+                showFirstFragment(savedInstanceState);
+                Toast.makeText(MainActivity.this, errorText, Toast.LENGTH_LONG).show();
+            }
+        });
+        showFragment(fragment);
+    }
+
+    private void loadDefaultData(final Bundle savedInstanceState) {
+
+        final Activity activity = this;
+
+        Preferences.loadDefaultData(activity);
+        Controller.loadDefaultData(activity);
+        showLoadFragment(savedInstanceState);
+
     }
 
     @Override

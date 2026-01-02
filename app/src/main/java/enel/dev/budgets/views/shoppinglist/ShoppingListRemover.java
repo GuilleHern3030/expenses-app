@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.sql.Controller;
@@ -59,7 +60,21 @@ public class ShoppingListRemover extends ShoppingListContext {
     }
 
     private void removeList(final String listName, final String itemName) {
-        Controller.shoppingList(requireActivity()).remove(listName, itemName);
-        removeListItem(new Item(itemName));
+        Controller.shoppingList(requireActivity()).remove(listName, itemName, new Controller.SQLcallback() {
+            @Override
+            public void onSuccess() {
+                requireActivity().runOnUiThread(() -> removeListItem(new Item(itemName)));
+            }
+
+            @Override
+            public void onError(String error) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show() );
+            }
+
+            @Override
+            public void onNetworkError() {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), requireActivity().getString(R.string.network_error), Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 }

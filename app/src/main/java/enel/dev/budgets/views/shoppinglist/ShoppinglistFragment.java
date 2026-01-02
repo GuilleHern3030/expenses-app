@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import enel.dev.budgets.data.livedata.ShoppingListsViewModel;
 import enel.dev.budgets.data.sql.Controller;
+import enel.dev.budgets.data.sql.UserController;
 import enel.dev.budgets.objects.shoppinglist.Item;
 import enel.dev.budgets.objects.shoppinglist.ShoppingList;
 import enel.dev.budgets.objects.shoppinglist.ShoppingListArray;
@@ -81,6 +82,9 @@ public class ShoppinglistFragment extends Fragment implements ShoppingListContex
         bDelete = view.findViewById(R.id.bDelete);
         bDelete.setOnClickListener(v -> showFragmentAbove(ShoppingListDelete.newInstance(currentList.getName())));
 
+        if (UserController.useCloud(requireActivity()))
+            actionBar.setVisibility(View.GONE);
+
         return view;
     }
 
@@ -145,7 +149,7 @@ public class ShoppinglistFragment extends Fragment implements ShoppingListContex
             @Override
             public void itemCheckClicked(int i, Item listItem, boolean isChecked) {
                 listItem.setCompleted(isChecked);
-                Controller.shoppingList(requireActivity()).edit(currentList.getName(), listItem.getName(), listItem);
+                Controller.shoppingList(requireActivity()).setChecked(currentList.getName(), listItem.getName(), isChecked);
             }
 
             @Override

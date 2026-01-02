@@ -23,6 +23,8 @@ import android.widget.Toast;
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.data.sql.Controller;
+import enel.dev.budgets.data.sql.TransactionsSQL;
+import enel.dev.budgets.data.sql.UserController;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.category.Categories;
 import enel.dev.budgets.objects.category.Category;
@@ -171,6 +173,8 @@ public class TransactionFragment extends Fragment {
     }
     //</editor-fold>
 
+    private boolean fetching = false;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -239,27 +243,29 @@ public class TransactionFragment extends Fragment {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Camera button ">
-        view.findViewById(R.id.bCamera).setOnClickListener(v -> {
-            CameraLayout fragment = CameraLayout.newInstance(transaction());
-            fragment.setOnTransactionPhotoListener(new CameraLayout.OnTransactionPhotoListener() {
-                @Override
-                public void onPhotoChanged(String newPhotoUri) {
-                    photoUri = newPhotoUri;
-                    if (photoUri != null && photoUri.length() > 0)
-                        photoExists.setVisibility(View.VISIBLE);
-                    else photoExists.setVisibility(View.GONE);
-                    hideFragmentAbove();
-                }
+        if (!UserController.useCloud(requireActivity()))
+            view.findViewById(R.id.bCamera).setOnClickListener(v -> {
+                CameraLayout fragment = CameraLayout.newInstance(transaction());
+                fragment.setOnTransactionPhotoListener(new CameraLayout.OnTransactionPhotoListener() {
+                    @Override
+                    public void onPhotoChanged(String newPhotoUri) {
+                        photoUri = newPhotoUri;
+                        if (photoUri != null && photoUri.length() > 0)
+                            photoExists.setVisibility(View.VISIBLE);
+                        else photoExists.setVisibility(View.GONE);
+                        hideFragmentAbove();
+                    }
 
-                @Override
-                public void onCancelOperation() {
-                    hideFragmentAbove();
-                    if (photoUri != null && photoUri.length() > 0)
-                        photoExists.setVisibility(View.VISIBLE);
-                }
+                    @Override
+                    public void onCancelOperation() {
+                        hideFragmentAbove();
+                        if (photoUri != null && photoUri.length() > 0)
+                            photoExists.setVisibility(View.VISIBLE);
+                    }
+                });
+                showFragment(fragment);
             });
-            showFragment(fragment);
-        });
+        else view.findViewById(R.id.bCamera).setVisibility(View.INVISIBLE);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Calendar button ">
@@ -285,8 +291,11 @@ public class TransactionFragment extends Fragment {
 
         //<editor-fold defaultstate="collapsed" desc=" Save button ">
         view.findViewById(R.id.bCreateTransaction).setOnClickListener(v -> {
-            if (id >= 0) editTransaction(view);
-            else createTransaction(view);
+            if (!fetching) {
+                fetching = true;
+                if (id >= 0) editTransaction(view);
+                else createTransaction(view);
+            }
         });
         //</editor-fold>
 
@@ -314,27 +323,68 @@ public class TransactionFragment extends Fragment {
 
     private void createTransaction(final View view) {
         if (this.money != null && this.money.getAmount() > 0) {
-            Transaction newTransaction = transaction();
-            boolean success = Controller.transactions(requireActivity()).add(newTransaction);
-            if (success) {
-                listener.onTransactionCreate(newTransaction);
-            } else {
-                SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_created_failed));
-                this.id = -1;
-            }
+            final Transaction newTransaction = new Transaction(id, category, date, money, description, isAnIncome, photoUri);//transaction();
+            Controller.transactions(requireActivity()).add(newTransaction, new TransactionsSQL.TransactionCallback() {
+                @Override
+                public void onSuccess(final Transaction transactionResult) {
+                    if (isAdded()) {
+                        fetching = false;
+                        listener.onTransactionCreate(transactionResult);
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        //SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_created_failed));
+                        SnackBar.show(requireActivity(), view, error);
+                        id = -1;
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.network_error));
+                        id = -1;
+                    }
+                }
+            });
         } else SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.error_invalid_amount));
     }
 
     private void editTransaction(final View view) {
-        Transaction newTransaction = transaction();
+        Transaction newTransaction = new Transaction(id, category, date, money, description, isAnIncome, photoUri);//transaction();
         try {
-            if (!oldTransaction.getDate().isSameMonth(newTransaction.getDate())) {
-                final int newId = Controller.transactions(requireActivity()).move(newTransaction, oldTransaction.getDate(), newTransaction.getDate());
-                if (newId >= 0) newTransaction = transaction(newId); else throw new IndexOutOfBoundsException();
-            }
-            final boolean success = Controller.transactions(requireActivity()).edit(newTransaction);
-            if (!success) throw new IllegalArgumentException();
-            listener.onTransactionEdited(oldTransaction, newTransaction);
+            Controller.transactions(requireActivity()).edit(oldTransaction, newTransaction, new TransactionsSQL.TransactionCallback() {
+                @Override
+                public void onSuccess(final Transaction transactionResult) {
+                    if (isAdded()) {
+                        listener.onTransactionEdited(oldTransaction, transactionResult);
+                        fetching = false;
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_edited_failed));
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
+            //if (!success) throw new IllegalArgumentException();
+            //listener.onTransactionEdited(oldTransaction, newTransaction);
         } catch (IndexOutOfBoundsException ignored) {
             SnackBar.show(requireActivity(), view, requireActivity().getString(R.string.transaction_edited_failed));
             SnackBar.show(requireActivity(), view, "Index out of bounds exception");
@@ -381,8 +431,10 @@ public class TransactionFragment extends Fragment {
     //</editor-fold>
 
     private Transaction transaction() {
-        final int id = this.id != -1 ? this.id : Controller.transactions(requireActivity()).get(this.date).getUnusedId();
-        return new Transaction(id, category, date, money, description, isAnIncome, photoUri);
+        if (!UserController.useCloud(requireActivity())) {
+            final int id = this.id != -1 ? this.id : Controller.localTransactions(requireActivity()).get(this.date).getUnusedId();
+            return new Transaction(id, category, date, money, description, isAnIncome, photoUri);
+        } else return transaction(this.id);
     }
 
     private Transaction transaction(final int id) {

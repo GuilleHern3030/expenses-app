@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import enel.dev.budgets.data.sql.Controller;
+import enel.dev.budgets.data.sql.TransactionsSQL;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.transaction.Transactions;
 
@@ -35,39 +36,81 @@ public class TransactionsViewModel extends ViewModel {
     }
 
     public void loadTransactions(final Context context, final Date date, final Date date2) {
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        //final ExecutorService executorService = Executors.newSingleThreadExecutor();
         initDate = date;
         endDate = date2;
         dataLoading.setValue(true);
-        executorService.submit(() -> {
+        Controller.transactions(context).get(date, date2, new TransactionsSQL.TransactionsCallback() {
+            @Override
+            public void onSuccess(Transactions transactionsList) {
+                transactions.postValue(transactionsList);
+                dataLoading.postValue(false);
+            }
+
+            @Override
+            public void onFailure(int errorCode) {
+                transactions.postValue(new Transactions());
+                dataLoading.postValue(false);
+            }
+        });
+        /*executorService.submit(() -> {
             Transactions transactionsList = Controller.transactions(context).get(date, date2);
             transactions.postValue(transactionsList);
             dataLoading.postValue(false);
-        });
+        });*/
     }
 
     public void loadTransactions(final Context context) {
         initDate = new Date();
         endDate = initDate;
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        //final ExecutorService executorService = Executors.newSingleThreadExecutor();
         dataLoading.setValue(true);
-        executorService.submit(() -> {
+        Controller.transactions(context).get(new TransactionsSQL.TransactionsCallback() {
+            @Override
+            public void onSuccess(Transactions transactionsList) {
+                transactions.postValue(transactionsList);
+                dataLoading.postValue(false);
+            }
+
+            @Override
+            public void onFailure(int errorCode) {
+                transactions.postValue(new Transactions());
+                dataLoading.postValue(false);
+            }
+        });
+        /*executorService.submit(() -> {
             Transactions transactions = Controller.transactions(context).get();
             this.transactions.postValue(transactions);
             dataLoading.postValue(false);
-        });
+        });*/
     }
 
+    // Leer un mes completo
     public void loadTransactions(final Context context, final Date date) {
-        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        //final ExecutorService executorService = Executors.newSingleThreadExecutor();
         initDate = date;
         endDate = date;
         dataLoading.setValue(true);
-        executorService.submit(() -> {
+        Controller.transactions(context).get(date, new TransactionsSQL.TransactionsCallback() {
+            @Override
+            public void onSuccess(Transactions transactionsList) {
+                Log.d("LOAD_TRANSACTION", "TransactionsViewModel leyó " + transactionsList.length());
+                transactions.postValue(transactionsList);
+                dataLoading.postValue(false);
+            }
+
+            @Override
+            public void onFailure(int errorCode) {
+                Log.d("LOAD_TRANSACTION", "Ocurrió un error en TransactionsViewModel " + errorCode);
+                transactions.postValue(null);
+                dataLoading.postValue(false);
+            }
+        });
+        /*executorService.submit(() -> {
             Transactions transactions = Controller.transactions(context).get(date.getYear(), date.getMonth());
             this.transactions.postValue(transactions);
             dataLoading.postValue(false);
-        });
+        });*/
     }
 
     public void removeData() {

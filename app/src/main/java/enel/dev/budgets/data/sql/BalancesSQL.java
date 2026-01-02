@@ -1,6 +1,6 @@
 package enel.dev.budgets.data.sql;
 
-import static enel.dev.budgets.data.sql.Controller.DATA_BASE;
+import static enel.dev.budgets.data.sql.Controller.DATA_BASE_LOCAL;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,22 +11,24 @@ import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.objects.money.Balance;
 import enel.dev.budgets.objects.money.Coin;
 
-public class BalancesSQL {
+public abstract class BalancesSQL {
 
-    static final String BALANCE_TABLE = "BALANCE";
+    protected static final String BALANCE_TABLE = "BALANCE";
 
-    private final Context context;
+    protected final Context context;
+    protected final String DATA_BASE;
 
-    public BalancesSQL(final Context context) {
+    public BalancesSQL(final Context context, final String dbName) {
         this.context = context;
+        this.DATA_BASE = dbName;
     }
 
-    static void createDefaultTables(@NonNull Activity activity, @NonNull BasicSQL sql) {
+    public static void createDefaultTables(@NonNull BasicSQL sql, final Activity activity) {
         final boolean tableCreated = sql.tablaCrear(BALANCE_TABLE, new String[]{
                 "coinname",
                 "coinsymbol"
         });
-        if (tableCreated) {
+        if (tableCreated && activity != null) {
             sql.tablaIngresarFila(BALANCE_TABLE, new String[]{
                     Preferences.defaultCoin(activity).getName(), // coinname
                     Preferences.defaultCoin(activity).getSymbol() // coinsymbol
@@ -41,66 +43,16 @@ public class BalancesSQL {
      *          1- coinsymbol: simbolo de la moneda
      * @return Devuelve un conjunto de objetos Money.
      */
-    public Balance get() {
-        BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        Balance balance = get(sql);
-        sql.cerrar();
-        return balance;
-    }
+    public abstract Balance get();
 
-    static Balance get(@NonNull BasicSQL sql) {
-        final Balance balance = new Balance();
-        try {
-            final int coins = sql.tablaFilas(BALANCE_TABLE);
-            for (int row = 0; row < coins; row++) {
-                String[] columns = sql.tablaObtenerFila(BALANCE_TABLE, row);
-                balance.add(new Coin(columns[0], columns[1]));
-            }
-        } catch(Exception ignored) { }
-        return balance;
-    }
+    public abstract void add(final Coin coin, final Controller.SQLcallback callback);
 
-    public boolean add(final Coin coin) {
-        if (coin == null) return false;
-        BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        Balance balance = get(sql);
-        if (balance.exists(coin.getName())) return false;
-        final int success = sql.tablaIngresarFila(BALANCE_TABLE, new String[]{
-                coin.getName(),
-                coin.getSymbol()
-        });
-        sql.cerrar();
-        return success >= 0;
-    }
+    public abstract void edit(final String oldCoinName, final Coin coin, final Controller.SQLcallback callback);
 
-    public boolean edit(final String oldCoinName, final Coin coin) {
-        BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        if (coin != null) try {
-            final int row = sql.tablaBuscarFila(BALANCE_TABLE, "coinname", oldCoinName, false);
-            if (row >= 0) {
-                return sql.tablaEditarFila(BALANCE_TABLE, row, new String[]{
-                        coin.getName(),
-                        coin.getSymbol()
-                });
-            }
-        } catch (Exception ignored) { }
-        sql.cerrar();
-        return false;
-    }
-
-    public boolean delete(final Coin coin) {
-        BasicSQL sql = new BasicSQL(context, DATA_BASE);
-        if (coin != null) try {
-            final int row = sql.tablaBuscarFila(BALANCE_TABLE, "coinname", coin.getName(), false);
-            if (row >= 0)
-                return sql.tablaEliminarFila(BALANCE_TABLE, row, true);
-        } catch (Exception ignored) { }
-        sql.cerrar();
-        return false;
-    }
+    public abstract void delete(final Coin coin, final Controller.SQLcallback callback);
 
     public static boolean setDefaultCoin(final Activity context, final String coinSymbol) {
-        BasicSQL sql = new BasicSQL(context, DATA_BASE);
+        BasicSQL sql = new BasicSQL(context, DATA_BASE_LOCAL);
         String[] data = sql.tablaObtenerFila(BALANCE_TABLE, 0);
         boolean success = sql.tablaEditarFila(BALANCE_TABLE, 0, new String[]{
                 "", // coinname

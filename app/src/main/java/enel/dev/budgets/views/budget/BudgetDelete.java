@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.sql.BudgetController;
+import enel.dev.budgets.data.sql.local.BudgetController;
 
 public class BudgetDelete extends BudgetContext {
 

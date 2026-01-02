@@ -239,6 +239,7 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                             <FrameLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
@@ -262,6 +263,21 @@
                                         android:textColor="@color/light_lgray"
                                         android:textSize="18sp"
                                         android:textStyle="bold" />
+
+                                    <FrameLayout
+                                        android:id="@+id/error_layout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:gravity="center"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"
+                                            android:paddingVertical="12dp"
+                                            android:background="@color/red"
+                                            android:text="@string/network_error"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"/>
+                                    </FrameLayout>
 
                                     <TextView
                                         android:id="@+id/summary_list_empty"

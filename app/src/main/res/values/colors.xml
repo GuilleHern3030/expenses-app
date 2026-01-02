@@ -51,6 +51,7 @@
     <color name="button_expense">#871919</color>
     <color name="button_income">#1A650D</color>
     <color name="button_debt">#9A6A18</color>
+    <color name="button_reserve">#13445E</color>
 
     <color name="default_text">#D3D3D3</color>
     <color name="default_text_dark">#787878</color>

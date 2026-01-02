@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,19 +25,25 @@ import enel.dev.budgets.R;
 import enel.dev.budgets.data.livedata.BalanceViewModel;
 import enel.dev.budgets.data.livedata.DebtsViewModel;
 import enel.dev.budgets.data.livedata.LinearLayoutViewModel;
+import enel.dev.budgets.data.livedata.ReservesViewModel;
 import enel.dev.budgets.data.livedata.TransactionsViewModel;
 import enel.dev.budgets.data.preferences.Preferences;
+import enel.dev.budgets.data.sql.UserController;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.NumberFormat;
 import enel.dev.budgets.objects.category.Category;
 import enel.dev.budgets.objects.debt.Debts;
 import enel.dev.budgets.objects.money.Balance;
 import enel.dev.budgets.objects.debt.Debt;
+import enel.dev.budgets.objects.reserve.Reserve;
+import enel.dev.budgets.objects.reserve.Reserves;
 import enel.dev.budgets.objects.transaction.Transaction;
 import enel.dev.budgets.objects.transaction.Transactions;
 
 import enel.dev.budgets.views.Fragment;
 import enel.dev.budgets.views.configuration.ConfigurationFragment;
+import enel.dev.budgets.views.editor.reserve.ReserveFragment;
+import enel.dev.budgets.views.sync.SyncFragment;
 import enel.dev.budgets.views.date.DateFragment;
 import enel.dev.budgets.views.editor.debt.DebtFragment;
 import enel.dev.budgets.views.editor.transaction.TransactionFragment;
@@ -45,7 +52,7 @@ import enel.dev.budgets.views.categorysummary.CategorySummary;
 import enel.dev.budgets.views.editor.transaction.TransactionImage;
 import enel.dev.budgets.views.summary.SummaryListLayout;
 
-public class HomeFragment extends Fragment implements TransactionFragment.OnTransactionChangeListener, DebtFragment.OnDebtChangeListener {
+public class HomeFragment extends Fragment implements TransactionFragment.OnTransactionChangeListener, DebtFragment.OnDebtChangeListener, ReserveFragment.OnReserveChangeListener {
 
     //<editor-fold defaultstate="collapsed" desc=" Constructor ">
 
@@ -60,6 +67,7 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     private SummaryListLayout summaryListIncomes; // layout de la lista del resumen de transacciones del mes dividido por categorías
     private BalanceListLayout balanceList; // layout de la lista del balance de monedas
     private DebtList debtList; // layout de la lista de deudas
+    private ReserveList reserveList; // layout de la lista de reservas
 
     private Transactions transactionsLoaded; // lista cargada de todas las transacciones del mes
     private Balance balanceLoaded; // lista cargada de todas las transacciones del mes
@@ -88,7 +96,14 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
             transactionsBalance = view.findViewById(R.id.transactions_day_balance);
             transactionsBalanceContainer = view.findViewById(R.id.transactions_day_balance_frame);
 
+            final ImageView bSync = view.findViewById(R.id.bSync);
+
             view.findViewById(R.id.bConfig).setOnClickListener(v -> replaceFragment(new ConfigurationFragment()));
+            bSync.setOnClickListener(v -> replaceFragment(new SyncFragment()));
+
+            if (UserController.useCloud(requireActivity())) {
+                bSync.setImageResource(R.drawable.sync_green);
+            }
 
             TextView summaryTitle = view.findViewById(R.id.summaryTitle);
             summaryTitle.setText(new Date().getMonthNameAndYear(requireActivity()));
@@ -102,6 +117,7 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
             summaryListIncomes = new SummaryListLayout(requireActivity(), view.findViewById(R.id.summary_list_incomes), decimalFormat);
             transactionsList = new TransactionsListLayout(requireContext(), view.findViewById(R.id.transactions_list), decimalFormat);
             debtList = new DebtList(requireContext(), view.findViewById(R.id.debt_list), decimalFormat);
+            reserveList = new ReserveList(requireContext(), view.findViewById(R.id.reserve_list), decimalFormat);
 
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -115,6 +131,7 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
         super.onViewCreated(view, savedInstanceState);
         loadTransactions(); // Carga las transacciones del mes desde la Base de Datos y, al finalizar, actualiza las vistas.
         loadDebts(); // Carga las deudas existentes
+        loadReserves(); // Carga las reservas existentes
         view.findViewById(R.id.navigation_view_home).setOnClickListener(v -> {});
 
         transactionsList.setOnTransactionCLick(new TransactionsListLayout.OnElementClickListener() {
@@ -173,6 +190,23 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
 
         // Cargar las transacciones
         debtsViewModel.loadDebts(requireActivity());
+    }
+
+    /** Carga las reservas desde la Base de Datos y, al finalizar, actualiza la vista de reservas */
+    private void loadReserves() {
+        ReservesViewModel reservesViewModel = new ViewModelProvider(this).get(ReservesViewModel.class);
+
+        // Observa el estado de carga
+        reservesViewModel.isDataLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading)
+                reserveList.showLoading();
+        });
+
+        // Observa las transacciones cargadas
+        reservesViewModel.getReserves().observe(getViewLifecycleOwner(), this::actualizeReserveList);
+
+        // Cargar las transacciones
+        reservesViewModel.loadReserves(requireActivity());
     }
 
     /** Carga las transacciones del mes actual desde la Base de Datos y, al finalizar, actualiza las vistas */
@@ -260,6 +294,12 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
             }
 
             @Override
+            public void onReserveOperationRequired() {
+                hideFragmentAbove();
+                showReserveFragment(ReserveFragment.newInstance());
+            }
+
+            @Override
             public void onCancelOperation() {
                 hideFragmentAbove();
             }
@@ -274,6 +314,11 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
 
     private void showDebtFragment(DebtFragment fragment) {
         fragment.setOnDebtChangeListener(this);
+        showFragmentAbove(fragment);
+    }
+
+    private void showReserveFragment(ReserveFragment fragment) {
+        fragment.setOnReserveChangeListener(this);
         showFragmentAbove(fragment);
     }
 
@@ -357,6 +402,32 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
         } else requireView().findViewById(R.id.debts_card_view).setVisibility(View.GONE);
     }
 
+    private void actualizeReserveList(final Reserves reserves) {
+
+        if (reserves.size() > 0) {
+
+            reserveList.showContent(reserves);
+            reserveList.setOnReserveClick(new ReserveList.OnElementClickListener() {
+                @Override
+                public void reserveClicked(int row, Reserve reserve) {
+                    showReserveFragment(ReserveFragment.newInstance(reserve, row));
+                }
+
+                @Override
+                public boolean reserveLongClicked(int row, Reserve reserve) {
+                    showReserveFragment(ReserveFragment.newInstance(reserve, row, true));
+                    return true;
+                }
+
+                @Override
+                public void emptyReserveClicked() {
+                    showReserveFragment(ReserveFragment.newInstance());
+                }
+            });
+            requireView().findViewById(R.id.reserves_card_view).setVisibility(View.VISIBLE);
+        } else requireView().findViewById(R.id.reserves_card_view).setVisibility(View.GONE);
+    }
+
     private void actualizeBalanceList(final Balance balance, final Transactions transactions) {
 
         if (Preferences.moreCoinsAvailable(requireActivity()))
@@ -418,9 +489,10 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     @Override
     public void onTransactionCreate(Transaction transaction) {
         hideFragmentAbove();
-        transactionsLoaded.add(transaction);
-        if (transaction.getDate().isSameMonth(new Date()))
+        if (transaction.getDate().isSameMonth(new Date())) {
             balanceLoaded.add(transaction);
+            transactionsLoaded.add(transaction);
+        }
         actualizeViews(transactionsLoaded);
         actualizeBalanceList(balanceLoaded, transactionsLoaded);
     }
@@ -428,9 +500,10 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     @Override
     public void onTransactionDelete(Transaction transaction) {
         hideFragmentAbove();
-        if (transaction.getDate().isSameMonth(new Date()))
+        if (transaction.getDate().isSameMonth(new Date())) {
             balanceLoaded.remove(transaction);
-        transactionsLoaded.remove(transaction);
+            transactionsLoaded.remove(transaction);
+        }
         actualizeViews(transactionsLoaded);
         actualizeBalanceList(balanceLoaded, transactionsLoaded);
     }
@@ -462,6 +535,17 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
 
     @Override
     public void onCancelDebtOperation() {
+        hideFragmentAbove();
+    }
+
+    @Override
+    public void onReserveChanged() {
+        hideFragmentAbove();
+        loadReserves();
+    }
+
+    @Override
+    public void onCancelReserveOperation() {
         hideFragmentAbove();
     }
 }

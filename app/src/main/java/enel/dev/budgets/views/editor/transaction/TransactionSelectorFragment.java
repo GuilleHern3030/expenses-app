@@ -54,12 +54,15 @@ public class TransactionSelectorFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_transaction_add_selector, container, false);
 
-        if (!this.isDebtAvailable)
+        if (!this.isDebtAvailable) {
             view.findViewById(R.id.bAddDebt).setVisibility(View.GONE);
+            view.findViewById(R.id.bAddReserve).setVisibility(View.GONE);
+        }
 
         view.findViewById(R.id.bAddExpense).setOnClickListener(v -> replaceFragment(TransactionFragment.newInstance(date, false)));
         view.findViewById(R.id.bAddIncome).setOnClickListener(v -> replaceFragment(TransactionFragment.newInstance(date, true)));
         view.findViewById(R.id.bAddDebt).setOnClickListener(v -> listener.onDebtOperationRequired());
+        view.findViewById(R.id.bAddReserve).setOnClickListener(v -> listener.onReserveOperationRequired());
         view.findViewById(R.id.bExit).setOnClickListener(v -> listener.onCancelOperation());
 
         return view;
@@ -83,6 +86,7 @@ public class TransactionSelectorFragment extends Fragment {
     public interface OnTransactionListener {
         void onTransactionOperationRequired(final TransactionFragment transactionFragment);
         void onDebtOperationRequired();
+        void onReserveOperationRequired();
         void onCancelOperation();
     }
 

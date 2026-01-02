@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.preferences.Preferences;
 import enel.dev.budgets.data.sql.Controller;
+import enel.dev.budgets.data.sql.TransactionsSQL;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.transaction.Transaction;
 import enel.dev.budgets.objects.transaction.Transactions;
@@ -47,6 +49,9 @@ public class CategorySummary extends Fragment {
     private Date date2;
 
     private View view;
+    private View loadingView;
+    private View contentView;
+    private TextView tvError;
 
     private TransactionsByDayListLayout transactionsListLayout;
 
@@ -106,6 +111,10 @@ public class CategorySummary extends Fragment {
                 Preferences.decimalFormat(requireActivity())
         );
 
+        this.loadingView = view.findViewById(R.id.category_loading_view);
+        this.contentView = view.findViewById(R.id.category_content_layout);
+        this.tvError = view.findViewById(R.id.tvError);
+
         return this.view;
     }
 
@@ -126,46 +135,120 @@ public class CategorySummary extends Fragment {
         actualizeTransactionsList();
     }
 
+    private void showLoading() {
+        loadingView.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
+        tvError.setVisibility(View.GONE);
+    }
+
+    private void hideLoading() {
+        loadingView.setVisibility(View.GONE);
+        contentView.setVisibility(View.VISIBLE);
+    }
+
+    private void setErrorText(final String text) {
+        loadingView.setVisibility(View.GONE);
+        contentView.setVisibility(View.GONE);
+        tvError.setVisibility(View.VISIBLE);
+        tvError.setText(text);
+    }
+
     private void actualizeTransactionsList() {
 
-        Transactions transactions = date1.partialEncode() == date2.partialEncode() ?
-                Controller.transactions(requireActivity()).get(date1.getYear(), date1.getMonth()).filterCategory(category).filterCoin(Preferences.defaultCoin(requireActivity()).getName()) :
-                Controller.transactions(requireActivity()).get(date1, date2).filterCategory(category).filterCoin(Preferences.defaultCoin(requireActivity()).getName());
+        showLoading();
+        final Fragment fragment = this;
+        Log.d("CATEGORYSUMMARYTRANSACTIONS", "Iniciando actualizacion");
 
-        TransactionsArray transactionsArray = new TransactionsArray(transactions);
-
-        if (transactionsArray.size() == 0) closeFragment();
-
-        // ListView
-        transactionsListLayout.showContent(transactionsArray);
-        transactionsListLayout.setOnTransactionCLick(new TransactionsByDayListLayout.OnDayClickListener() {
+        loadTransactionsList(date1, date2, new TransactionsSQL.TransactionsCallback() {
             @Override
-            public void transactionClicked(int i, int row, Transaction transaction) {
-                showEditorFragment(i, row, transaction);
+            public void onSuccess(Transactions transactionsResult) {
+                if (isAdded()) {
+
+                    Log.d("CATEGORYSUMMARYTRANSACTIONS", ""+transactionsResult.length());
+
+                    final Transactions transactions = transactionsResult.filterCategory(category).filterCoin(Preferences.defaultCoin(requireActivity()).getName());
+
+                    final TransactionsArray transactionsArray = new TransactionsArray(transactions);
+
+                    requireActivity().runOnUiThread(() -> {
+
+                        hideLoading();
+
+                        if (transactionsArray.size() == 0) closeFragment();
+
+                        // ListView
+                        transactionsListLayout.showContent(transactionsArray);
+                        transactionsListLayout.setOnTransactionCLick(new TransactionsByDayListLayout.OnDayClickListener() {
+                            @Override
+                            public void transactionClicked(int i, int row, Transaction transaction) {
+                                showEditorFragment(i, row, transaction);
+                            }
+
+                            @Override
+                            public void transactionPhotoClicked(int i, int row, Transaction transaction) {
+                                TransactionImage transactionImage = TransactionImage.newInstance(transaction);
+                                transactionImage.setOnFragmentInteractionListener(CategorySummary.this::hideSecondaryFragment);
+                            }
+
+                            @Override
+                            public void transactionLongClicked(int i, int row, Transaction transaction) {
+                                showDeleterFragment(i, row, transaction);
+                            }
+
+                            @Override
+                            public void transactionDayClicked(Date date) {
+                                showDateFragment(date);
+                            }
+                        });
+
+                        TextView transactionsAmount = view.findViewById(R.id.transaction_total_amount);
+                        TextView transactionsQuantity = view.findViewById(R.id.transaction_quantity);
+
+                        transactionsAmount.setText(transactions.total(Preferences.defaultCoin(requireActivity())).toString(Preferences.decimalFormat(requireActivity())));
+                        transactionsQuantity.setText(String.valueOf(transactions.length()));
+
+                    });
+                }
             }
 
             @Override
-            public void transactionPhotoClicked(int i, int row, Transaction transaction) {
-                TransactionImage transactionImage = TransactionImage.newInstance(transaction);
-                transactionImage.setOnFragmentInteractionListener(() -> hideSecondaryFragment());
-            }
-
-            @Override
-            public void transactionLongClicked(int i, int row, Transaction transaction) {
-                showDeleterFragment(i, row, transaction);
-            }
-
-            @Override
-            public void transactionDayClicked(Date date) {
-                showDateFragment(date);
+            public void onFailure(int errorCode) {
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        String errorText = errorCode >= 500 ?
+                            requireActivity().getString(R.string.network_error)
+                                : requireActivity().getString(R.string.sync_pull_server_error);
+                        setErrorText(errorText);
+                    });
+                }
             }
         });
+    }
 
-        TextView transactionsAmount = view.findViewById(R.id.transaction_total_amount);
-        TextView transactionsQuantity = view.findViewById(R.id.transaction_quantity);
+    private void loadTransactionsList(final Date date1, final Date date2, final TransactionsSQL.TransactionsCallback callback) {
+        if (date1.partialEncode() == date2.partialEncode())
+            Controller.transactions(requireActivity()).get(date1.getYear(), date1.getMonth(), new TransactionsSQL.TransactionsCallback() {
+                @Override
+                public void onSuccess(Transactions transactionResult) {
+                    callback.onSuccess(transactionResult);
+                }
 
-        transactionsAmount.setText(transactions.total(Preferences.defaultCoin(requireActivity())).toString(Preferences.decimalFormat(requireActivity())));
-        transactionsQuantity.setText(String.valueOf(transactions.length()));
+                @Override
+                public void onFailure(int errorCode) {
+                    callback.onFailure(errorCode);
+                }
+            });
+        else Controller.transactions(requireActivity()).get(date1, date2, new TransactionsSQL.TransactionsCallback() {
+            @Override
+            public void onSuccess(Transactions transactionResult) {
+                callback.onSuccess(transactionResult);
+            }
+
+            @Override
+            public void onFailure(int errorCode) {
+                callback.onFailure(errorCode);
+            }
+        });
     }
 
     public void showEditorFragment(final int i, final int row, final Transaction transaction) {

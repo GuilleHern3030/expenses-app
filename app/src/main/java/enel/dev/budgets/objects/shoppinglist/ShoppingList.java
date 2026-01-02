@@ -2,7 +2,7 @@ package enel.dev.budgets.objects.shoppinglist;
 
 import java.util.ArrayList;
 
-import enel.dev.budgets.data.sql.ShoppingListSQL;
+import enel.dev.budgets.data.sql.local.ShoppingListSQL;
 
 public class ShoppingList extends ArrayList<Item> {
 

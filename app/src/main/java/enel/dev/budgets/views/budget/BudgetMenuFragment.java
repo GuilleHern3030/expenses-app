@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import enel.dev.budgets.R;
-import enel.dev.budgets.data.sql.BudgetController;
+import enel.dev.budgets.data.sql.local.BudgetController;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.sql.Controller;
@@ -113,8 +114,22 @@ public class ShoppingListEditor extends ShoppingListContext {
     private void editBudget(final String description) {
         if (description != null && description.length() > 0) {
             final Item newItem = new Item(description, item.isCompleted());
-            Controller.shoppingList(requireActivity()).edit(listName, item.getName(), newItem);
-            editListItem(id, newItem);
+            Controller.shoppingList(requireActivity()).edit(listName, item.getName(), newItem, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    requireActivity().runOnUiThread(() -> editListItem(id, newItem));
+                }
+
+                @Override
+                public void onError(String error) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show() );
+                }
+
+                @Override
+                public void onNetworkError() {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), requireActivity().getString(R.string.network_error), Toast.LENGTH_SHORT).show());
+                }
+            });
         } else SnackBar.show(requireContext(), getView(), requireContext().getString(R.string.shopping_list_description_empty_error));
     }
 

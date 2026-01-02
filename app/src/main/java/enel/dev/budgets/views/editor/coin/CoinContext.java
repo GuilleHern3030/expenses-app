@@ -15,7 +15,7 @@ import enel.dev.budgets.utils.SnackBar;
 
 public class CoinContext extends Fragment {
 
-
+    private boolean fetching = false;
 
 
     @Override
@@ -68,27 +68,92 @@ public class CoinContext extends Fragment {
     }
 
     protected void resultCoinCreate(final Coin coin) {
-        boolean success = Controller.balances(requireActivity()).add(coin);
-        if (success) {
-            if (subListener != null) subListener.onCoinCreated(coin);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.coin_operation_failed));
+        if (!fetching) {
+            fetching = true;
+            final Fragment fragment = this;
+            Controller.balances(requireActivity()).add(coin, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        if (subListener != null) subListener.onCoinCreated(coin);
+                        getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), error);
+                    }
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
+        }
     }
 
     protected void resultCoinDelete(final Coin coin) {
-        boolean success = Controller.balances(requireActivity()).delete(coin);
-        if (success) {
-            if (subListener != null) subListener.onCoinDeleted(coin);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.coin_operation_failed));
+        final Fragment fragment = this;
+        Controller.balances(requireActivity()).delete(coin, new Controller.SQLcallback() {
+            @Override
+            public void onSuccess() {
+                if (isAdded()) {
+                    if (subListener != null) subListener.onCoinDeleted(coin);
+                    getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                if (isAdded())
+                    SnackBar.show(requireActivity(), getView(), error);
+            }
+
+            @Override
+            public void onNetworkError() {
+                if (isAdded())
+                    SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+            }
+        });
     }
 
     protected void resultCoinEdit(final Coin coin, final Coin oldCoin) {
-        boolean success = Controller.balances(requireActivity()).edit(oldCoin.getName(), coin);
-        if (success) {
-            if (subListener != null) subListener.onCoinEdited(coin, oldCoin);
-            getParentFragmentManager().beginTransaction().remove(this).commit(); // Remove this fragment
-        } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.coin_operation_failed));
+        if (!fetching) {
+            fetching = true;
+            final Fragment fragment = this;
+            Controller.balances(requireActivity()).edit(oldCoin.getName(), coin, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    if (isAdded()) {
+                        fetching = false;
+                        if (subListener != null) subListener.onCoinEdited(coin, oldCoin);
+                        getParentFragmentManager().beginTransaction().remove(fragment).commit(); // Remove this fragment
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    if (isAdded())
+                        SnackBar.show(requireActivity(), getView(), error);
+                }
+
+                @Override
+                public void onNetworkError() {
+                    if (isAdded()) {
+                        fetching = false;
+                        SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.network_error));
+                    }
+                }
+            });
+        }
     }
 
 }

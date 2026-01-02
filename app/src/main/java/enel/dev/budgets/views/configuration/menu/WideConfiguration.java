@@ -5,29 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import enel.dev.budgets.MainActivity;
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.preferences.Preferences;
-import enel.dev.budgets.data.sql.Controller;
-import enel.dev.budgets.objects.category.Categories;
-import enel.dev.budgets.objects.category.Category;
-import enel.dev.budgets.utils.CustomLinearLayoutManager;
-import enel.dev.budgets.utils.RecyclerViewNoScrollable;
 import enel.dev.budgets.views.configuration.ConfigurationContext;
-import enel.dev.budgets.views.editor.category.CategoriesRecyclerView;
-import enel.dev.budgets.views.editor.category.CategoryEditorContext;
-import enel.dev.budgets.views.editor.category.CreateCategory;
-import enel.dev.budgets.views.editor.category.DeleteCategory;
-import enel.dev.budgets.views.editor.category.EditCategory;
 
 /**
  * A simple {@link Fragment} subclass.

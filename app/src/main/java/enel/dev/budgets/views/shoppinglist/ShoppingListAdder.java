@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import enel.dev.budgets.R;
 import enel.dev.budgets.data.sql.Controller;
@@ -59,8 +60,22 @@ public class ShoppingListAdder extends ShoppingListContext {
     private void addItem(final String name) {
         if (name != null && name.length() > 0) {
             final Item item = new Item(name);
-            Controller.shoppingList(requireActivity()).add(listName, item);
-            addListItem(item);
+            Controller.shoppingList(requireActivity()).add(listName, item, new Controller.SQLcallback() {
+                @Override
+                public void onSuccess() {
+                    requireActivity().runOnUiThread(() -> addListItem(item));
+                }
+
+                @Override
+                public void onError(String error) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show() );
+                }
+
+                @Override
+                public void onNetworkError() {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), requireActivity().getString(R.string.network_error), Toast.LENGTH_SHORT).show());
+                }
+            });
         } else SnackBar.show(requireActivity(), getView(), requireActivity().getString(R.string.shopping_list_description_empty_error));
     }
 }

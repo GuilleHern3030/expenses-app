@@ -167,6 +167,11 @@ public class DateFragment extends Fragment {
             }
 
             @Override
+            public void onReserveOperationRequired() {
+                hideFragmentAbove();
+            }
+
+            @Override
             public void onCancelOperation() {
                 hideFragmentAbove();
             }
