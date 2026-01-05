@@ -28,6 +28,7 @@ import enel.dev.budgets.data.livedata.LinearLayoutViewModel;
 import enel.dev.budgets.data.livedata.ReservesViewModel;
 import enel.dev.budgets.data.livedata.TransactionsViewModel;
 import enel.dev.budgets.data.preferences.Preferences;
+import enel.dev.budgets.data.sql.Controller;
 import enel.dev.budgets.data.sql.UserController;
 import enel.dev.budgets.objects.Date;
 import enel.dev.budgets.objects.NumberFormat;
@@ -43,6 +44,7 @@ import enel.dev.budgets.objects.transaction.Transactions;
 import enel.dev.budgets.views.Fragment;
 import enel.dev.budgets.views.configuration.ConfigurationFragment;
 import enel.dev.budgets.views.editor.reserve.ReserveFragment;
+import enel.dev.budgets.views.sync.LoadingFragment;
 import enel.dev.budgets.views.sync.SyncFragment;
 import enel.dev.budgets.views.date.DateFragment;
 import enel.dev.budgets.views.editor.debt.DebtFragment;
@@ -97,13 +99,67 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
             transactionsBalanceContainer = view.findViewById(R.id.transactions_day_balance_frame);
 
             final ImageView bSync = view.findViewById(R.id.bSync);
+            final View pbSync = view.findViewById(R.id.sync_progress);
 
             view.findViewById(R.id.bConfig).setOnClickListener(v -> replaceFragment(new ConfigurationFragment()));
-            bSync.setOnClickListener(v -> replaceFragment(new SyncFragment()));
 
-            if (UserController.useCloud(requireActivity())) {
+            bSync.setOnClickListener(v -> {
+                if(UserController.isSynchronized(requireActivity())) {
+                    final boolean useCloud = UserController.useCloud(requireActivity());
+                    UserController.setUseCloud(requireActivity(), !useCloud);
+                    pbSync.setVisibility(View.VISIBLE);
+                    bSync.setVisibility(View.GONE);
+                    bSync.setImageResource(useCloud ? R.drawable.sync_white : R.drawable.sync_green);
+
+                    Controller.loadDataBase(requireActivity(), new Controller.LoadCallback() {
+                        @Override
+                        public void onSuccess() {
+                            if (isAdded()) {
+                                requireActivity().runOnUiThread(() -> loadData());
+                                pbSync.setVisibility(View.GONE);
+                                bSync.setVisibility(View.VISIBLE);
+                                loadData();
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error, int errorCode) {
+                            if (isAdded()) {
+                                requireActivity().runOnUiThread(() -> {
+                                    if (errorCode == 401) { // sync code error
+                                        UserController.unsync(requireActivity());
+                                        bSync.setImageResource(R.drawable.sync_white);
+                                        pbSync.setVisibility(View.GONE);
+                                        bSync.setVisibility(View.VISIBLE);
+                                        loadData();
+                                    }
+                                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onNetworkError() {
+                            if (isAdded()) {
+                                requireActivity().runOnUiThread(() -> {
+                                    Toast.makeText(requireActivity(), requireActivity().getString(R.string.network_error), Toast.LENGTH_LONG).show();
+                                    pbSync.setVisibility(View.GONE);
+                                    bSync.setVisibility(View.VISIBLE);
+                                    loadData();
+                                });
+                            }
+                        }
+                    });
+                } else replaceFragment(new SyncFragment());
+            });
+
+            bSync.setOnLongClickListener(v -> {
+                replaceFragment(new SyncFragment());
+                return true;
+            });
+
+            if (UserController.useCloud(requireActivity()))
                 bSync.setImageResource(R.drawable.sync_green);
-            }
 
             TextView summaryTitle = view.findViewById(R.id.summaryTitle);
             summaryTitle.setText(new Date().getMonthNameAndYear(requireActivity()));
@@ -129,9 +185,9 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadTransactions(); // Carga las transacciones del mes desde la Base de Datos y, al finalizar, actualiza las vistas.
-        loadDebts(); // Carga las deudas existentes
-        loadReserves(); // Carga las reservas existentes
+
+        loadData();
+
         view.findViewById(R.id.navigation_view_home).setOnClickListener(v -> {});
 
         transactionsList.setOnTransactionCLick(new TransactionsListLayout.OnElementClickListener() {
@@ -167,6 +223,12 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
         bShowExpenses.setOnClickListener(v -> showSummaryList(false));
         bShowIncomes.setOnClickListener(v -> showSummaryList(true));
 
+    }
+
+    private void loadData() {
+        loadTransactions(); // Carga las transacciones del mes desde la Base de Datos y, al finalizar, actualiza las vistas.
+        loadDebts(); // Carga las deudas existentes
+        loadReserves(); // Carga las reservas existentes
     }
 
     @Override
@@ -485,6 +547,23 @@ public class HomeFragment extends Fragment implements TransactionFragment.OnTran
         summaryListIncomes.setVisibility(incomes ? View.VISIBLE : View.GONE);
     }
     //</editor-fold>
+
+    private void reload() {
+        final LoadingFragment fragment = LoadingFragment.newInstance();
+        fragment.setOnLoadFinishListener(new LoadingFragment.OnLoadFinished() {
+            @Override
+            public void onSuccess() {
+                replaceFragment(HomeFragment.newInstance());
+            }
+
+            @Override
+            public void onFailure(String errorText) {
+                replaceFragment(HomeFragment.newInstance());
+                Toast.makeText(requireActivity(), errorText, Toast.LENGTH_LONG).show();
+            }
+        });
+        showFragment(fragment);
+    }
 
     @Override
     public void onTransactionCreate(Transaction transaction) {

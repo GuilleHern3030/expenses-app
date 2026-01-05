@@ -80,8 +80,7 @@ public class UserController {
     }
 
     public static boolean isPremium(final Context context) {
-        return true;
-        //return Objects.equals(getValue(context, "is_premium"), "1");
+        return Objects.equals(getValue(context, "is_premium"), "1");
     }
 
     public static String getUUID(final Context context) {
@@ -138,9 +137,14 @@ public class UserController {
         return signedIn != null && !Objects.equals(signedIn, "0");
     }
 
+    /**
+     * Verifica si el usuario está sincronizado con el backend
+     * @param context context
+     * @return {boolean} TRUE si tiene sync_code o premium
+     */
     public static boolean isSynchronized(final Context context) {
         final String sync_code = getValue(context, "sync_code");
-        return sync_code != null && sync_code.length() > 0;
+        return sync_code != null && sync_code.length() > 0 || isPremium(context);
     }
 
     public static void setSyncCode(final Context context, final String sync_code) {
